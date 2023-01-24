@@ -4,4 +4,12 @@ class MyApi {
   static getShift() {
     return '$baseUrl/get_function/shift';
   }
+
+  static login(scan, value) {
+    return '$baseUrl/login/scan/$scan/$value';
+  }
+
+  static pulling(scan, tgl_awal, tgl_akhir) {
+    return '$baseUrl/pages/dashboard/get/$scan/$tgl_awal/$tgl_akhir';
+  }
 }

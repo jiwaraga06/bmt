@@ -1,4 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bmt/source/data/Auth/cubit/login_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/shift_cubit.dart';
+import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,16 +13,16 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  String dropdownvalue = 'Item 1';
+  String? dropdownvalue;
 
-// List of items in our dropdown menu
-  var items = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  void login() {
+    if (dropdownvalue != null) {
+      BlocProvider.of<LoginCubit>(context).login(dropdownvalue, context);
+    } else {
+    MyAlertDialog.warningDialog(context, 'Anda Belum Memilih Shift !');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +32,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -41,31 +45,45 @@ class _LoginState extends State<Login> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  margin: const EdgeInsets.all(8.0),
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButtonFormField(
-                    decoration: InputDecoration(border: OutlineInputBorder()),
-                    isExpanded: true,
-                    value: dropdownvalue,
-                    icon: const Icon(Icons.keyboard_arrow_down),
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(items),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
-                  ),
+                BlocBuilder<ShiftCubit, ShiftState>(
+                  builder: (context, state) {
+                    if (state is ShiftLoading) {
+                      return Center();
+                    }
+                    if (state is ShiftLoaded == false) {
+                      return Center();
+                    }
+                    List<dynamic> data = (state as ShiftLoaded).json;
+                    if (data.isEmpty) {
+                      return Container();
+                    }
+                    return Container(
+                      margin: const EdgeInsets.all(8.0),
+                      height: 60,
+                      child: DropdownButtonFormField<dynamic>(
+                        decoration: InputDecoration(border: OutlineInputBorder()),
+                        isExpanded: true,
+                        value: dropdownvalue,
+                        hint: Text('Pilih Shift'),
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: data
+                            .map((e) => DropdownMenuItem(
+                                  child: Text(e['display']),
+                                  value: e['value'],
+                                ))
+                            .toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            dropdownvalue = newValue!;
+                            print(dropdownvalue);
+                          });
+                        },
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 12),
-                ElevatedButton(onPressed: (){}, 
-                style: ElevatedButton.styleFrom(fixedSize: Size.fromWidth(200)),
-                child: Text("Scan QR"))
+                ElevatedButton(onPressed: login, style: ElevatedButton.styleFrom(fixedSize: Size.fromWidth(200)), child: Text("Scan QR"))
               ],
             ),
           )
