@@ -9,9 +9,12 @@ class CustomButtonSave extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.green[600]
+        backgroundColor: Colors.green[600],
       ),
-      child: Text('SAVE'),
+      child: Text(
+        'SAVE',
+        style: TextStyle(fontSize: 16, color: Colors.white),
+      ),
     );
   }
 }

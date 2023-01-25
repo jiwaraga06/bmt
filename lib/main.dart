@@ -1,7 +1,9 @@
 import 'package:bmt/source/data/Auth/cubit/login_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/shift_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/splash_cubit.dart';
+import 'package:bmt/source/data/Menu/Pulling/cubit/insert_scan_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
+import 'package:bmt/source/data/Menu/Pulling/cubit/save_pulling_cubit.dart';
 import 'package:bmt/source/repository/repository.dart';
 import 'package:bmt/source/network/network.dart';
 import 'package:bmt/source/router/router.dart';
@@ -36,6 +38,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PullingCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => InsertScanCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => SavePullingCubit(myRepository: myRepository),
         ),
       ],
       child: MaterialApp(

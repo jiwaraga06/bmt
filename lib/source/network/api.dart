@@ -12,4 +12,13 @@ class MyApi {
   static pulling(scan, tgl_awal, tgl_akhir) {
     return '$baseUrl/pages/dashboard/get/$scan/$tgl_awal/$tgl_akhir';
   }
+
+  static pullingScanInsert(scan) {
+    return '$baseUrl/pages/pooling/scan/$scan';
+  }
+
+  static pullingSave(){
+    return '$baseUrl/pages/pooling/save';
+  }
+
 }
