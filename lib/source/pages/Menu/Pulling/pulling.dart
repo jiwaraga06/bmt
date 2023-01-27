@@ -3,6 +3,7 @@ import 'package:bmt/source/data/Menu/Pulling/cubit/workcenter_cubit.dart';
 import 'package:bmt/source/router/string.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:bmt/source/widget/customLoading.dart';
+import 'package:bmt/source/widget/customTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -18,6 +19,7 @@ class Pulling extends StatefulWidget {
 class _PullingState extends State<Pulling> {
   DateTimeRange? _selectedDateRange;
   var tanggalAwal, tanggalAkhir;
+  bool isSearch = false;
   void show() async {
     final DateTimeRange? result = await showDateRangePicker(
       context: context,
@@ -50,7 +52,27 @@ class _PullingState extends State<Pulling> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pulling'),
+        title: isSearch
+            ? TextFormField(
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.white),
+                ),
+                onChanged: (value) {
+                  BlocProvider.of<PullingCubit>(context).searchData(value);
+                },
+              )
+            : Text('Pulling'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {
+                  isSearch = !isSearch;
+                });
+              },
+              icon: isSearch ? Icon(Icons.close) : Icon(Icons.search))
+        ],
       ),
       body: BlocBuilder<PullingCubit, PullingState>(
         builder: (context, state) {

@@ -11,6 +11,7 @@ part 'pulling_state.dart';
 class PullingCubit extends Cubit<PullingState> {
   final MyRepository? myRepository;
   PullingCubit({required this.myRepository}) : super(PullingInitial());
+  var list = [];
 
   void getPulling(tgl_awal, tgl_akhir) async {
     emit(PullingLoading());
@@ -19,6 +20,7 @@ class PullingCubit extends Cubit<PullingState> {
     print(barcode);
     myRepository!.getPulling(barcode, tgl_awal, tgl_akhir).then((value) {
       var json = jsonDecode(value.body);
+      list = json['rows'];
       print("Pulling: $json");
       if (value.statusCode == 200) {
         emit(PullingLoaded(json: json['rows'], statusCode: value.statusCode));
@@ -37,6 +39,7 @@ class PullingCubit extends Cubit<PullingState> {
     var tanggal = date.toString().split(' ')[0];
     myRepository!.getPulling(barcode, tanggal, tanggal).then((value) {
       var json = jsonDecode(value.body);
+      list = json['rows'];
       print("Pulling: $json");
       if (value.statusCode == 200) {
         emit(PullingLoaded(json: json['rows'], statusCode: value.statusCode));
@@ -44,5 +47,22 @@ class PullingCubit extends Cubit<PullingState> {
         emit(PullingLoaded(json: {'message': 'Error'}, statusCode: value.statusCode));
       }
     });
+  }
+
+  void searchData(value) async {
+    emit(PullingLoading());
+    var result = value;
+    print('Result:  $result');
+    print('list');
+    // print(list);
+    var hasil = list.where((e) => e['wopl_code'].toLowerCase().contains(result.toLowerCase())).toList();
+    print('hasil: $hasil');
+    if (result == '') {
+      print('Kosong');
+      emit(PullingLoaded(statusCode: 200, json: list));
+    } else {
+      print('ada');
+      emit(PullingLoaded(statusCode: 200, json: hasil));
+    }
   }
 }

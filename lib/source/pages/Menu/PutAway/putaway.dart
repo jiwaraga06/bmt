@@ -15,6 +15,7 @@ class PutAway extends StatefulWidget {
 class _PutAwayState extends State<PutAway> {
   DateTimeRange? _selectedDateRange;
   var tanggalAwal, tanggalAkhir;
+  bool isSearch = false;
   void show() async {
     final DateTimeRange? result = await showDateRangePicker(
       context: context,
@@ -47,7 +48,27 @@ class _PutAwayState extends State<PutAway> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Put Away'),
+          title: isSearch
+              ? TextFormField(
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color: Colors.white),
+                  ),
+                  onChanged: (value) {
+                    BlocProvider.of<PutawayCubit>(context).searchData(value);
+                  },
+                )
+              : Text('Put Away'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  setState(() {
+                    isSearch = !isSearch;
+                  });
+                },
+                icon: isSearch ? Icon(Icons.close) : Icon(Icons.search))
+          ],
         ),
         body: BlocBuilder<PutawayCubit, PutawayState>(
           builder: (context, state) {
