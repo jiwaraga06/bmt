@@ -28,19 +28,19 @@ class _InsertPutAwayState extends State<InsertPutAway> {
 
   save() {
     if (formKey.currentState!.validate()) {
-      Navigator.pop(context);
-      BlocProvider.of<SavePutAwayCubit>(context).savePutAway(
-        controllerQty.text,
-        wo_oid,
-        controllerQtyAvailable.text,
-        controllerBoxNum.text,
-        controllerLot.text,
-        invp_wopl_oid,
-        wopl_code_box,
-        customer_id,
-        controllerCust.text,
-        wop_pt_id,
-      );
+    Navigator.pop(context);
+    BlocProvider.of<SavePutAwayCubit>(context).savePutAway(
+      controllerQty.text,
+      wo_oid,
+      controllerQtyAvailable.text,
+      controllerBoxNum.text,
+      controllerLot.text,
+      invp_wopl_oid,
+      wopl_code_box,
+      customer_id,
+      controllerCust.text,
+      wop_pt_id,
+    );
     }
   }
 

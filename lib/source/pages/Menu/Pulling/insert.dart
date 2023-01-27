@@ -28,7 +28,7 @@ class _InsertPullingState extends State<InsertPulling> {
   final formKey = GlobalKey<FormState>();
   String? wc_to_id, wc_from_id, last_wc, qty_real;
   save() {
-    if (formKey.currentState!.validate()) {
+    // if (formKey.currentState!.validate()) {
       BlocProvider.of<SavePullingCubit>(context).savePulling(
         controllerBoxNumber.text,
         controllerQtyOk.text,
@@ -39,7 +39,7 @@ class _InsertPullingState extends State<InsertPulling> {
         qty_real,
         last_wc,
       );
-    }
+    // }
   }
 
   @override
@@ -116,7 +116,7 @@ class _InsertPullingState extends State<InsertPulling> {
                           ),
                           CustomFormFieldRead(
                             controller: controllerQtyAvailable,
-                            label: 'Work Center To',
+                            label: 'Quantity Available',
                             msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
