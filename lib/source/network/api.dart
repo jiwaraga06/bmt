@@ -17,8 +17,40 @@ class MyApi {
     return '$baseUrl/pages/pooling/scan/$scan';
   }
 
-  static pullingSave(){
+  static pullingSave() {
     return '$baseUrl/pages/pooling/save';
   }
 
+  static pullingskipwc(shift, nik, scan) {
+    return '$baseUrl/pages/pooling/skip/$shift/$nik/$scan';
+  }
+
+  static pullingunskipwc(shift, nik, scan) {
+    return '$baseUrl/pages/pooling/unskip/$shift/$nik/$scan';
+  }
+
+  static putaway(nik, tglAwal, tglAkhir) {
+    return '$baseUrl/pages/packing_list/get/$nik/$tglAwal/$tglAkhir';
+  }
+
+  static putawayScan(scan, nik, shift) {
+    return '$baseUrl/pages/packing_list/scan_detail/$scan/$nik/$shift';
+  }
+
+  static putawaySave() {
+    return '$baseUrl/pages/packing_list/add_detail';
+  }
+
+  static putawayDetailSave(nik) {
+    return '$baseUrl/pages/packing_list/get_detail/$nik';
+  }
+
+  static clearDetailSavePutAway() {
+    return '$baseUrl/pages/packing_list/clear_detail';
+  }
+
+  static saveDataPutAway(){
+    return '$baseUrl/pages/packing_list/save_data';
+
+  }
 }

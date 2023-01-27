@@ -27,4 +27,22 @@ class PullingCubit extends Cubit<PullingState> {
       }
     });
   }
+
+  void getCurrentPulling() async {
+    emit(PullingLoading());
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    var barcode = pref.getString('scan');
+    print(barcode);
+    var date = DateTime.now();
+    var tanggal = date.toString().split(' ')[0];
+    myRepository!.getPulling(barcode, tanggal, tanggal).then((value) {
+      var json = jsonDecode(value.body);
+      print("Pulling: $json");
+      if (value.statusCode == 200) {
+        emit(PullingLoaded(json: json['rows'], statusCode: value.statusCode));
+      } else {
+        emit(PullingLoaded(json: {'message': 'Error'}, statusCode: value.statusCode));
+      }
+    });
+  }
 }

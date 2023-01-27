@@ -1,4 +1,3 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bmt/source/data/Auth/cubit/login_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/shift_cubit.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
@@ -19,7 +18,7 @@ class _LoginState extends State<Login> {
     if (dropdownvalue != null) {
       BlocProvider.of<LoginCubit>(context).login(dropdownvalue, context);
     } else {
-    MyAlertDialog.warningDialog(context, 'Anda Belum Memilih Shift !');
+      MyAlertDialog.warningDialog(context, 'Anda Belum Memilih Shift !');
     }
   }
 
@@ -83,7 +82,11 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 const SizedBox(height: 12),
-                ElevatedButton(onPressed: login, style: ElevatedButton.styleFrom(fixedSize: Size.fromWidth(200)), child: Text("Scan QR"))
+                ElevatedButton(
+                  onPressed: login,
+                  style: ElevatedButton.styleFrom(fixedSize: Size.fromWidth(200)),
+                  child: Text("Scan QR"),
+                )
               ],
             ),
           )

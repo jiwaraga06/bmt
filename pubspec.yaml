@@ -46,6 +46,7 @@ dependencies:
   awesome_snackbar_content: ^0.1.0
   persistent_bottom_nav_bar: ^5.0.2
   flutter_speed_dial: ^6.2.0
+  modal_bottom_sheet: ^2.1.2
 
 dev_dependencies:
   flutter_test:

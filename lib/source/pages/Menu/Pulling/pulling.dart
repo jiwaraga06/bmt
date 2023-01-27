@@ -1,5 +1,8 @@
 import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
+import 'package:bmt/source/data/Menu/Pulling/cubit/workcenter_cubit.dart';
 import 'package:bmt/source/router/string.dart';
+import 'package:bmt/source/widget/customAlertDialog.dart';
+import 'package:bmt/source/widget/customLoading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -35,6 +38,12 @@ class _PullingState extends State<Pulling> {
         BlocProvider.of<PullingCubit>(context).getPulling(tanggalAwal, tanggalAkhir);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<PullingCubit>(context).getCurrentPulling();
   }
 
   @override
@@ -137,54 +146,102 @@ class _PullingState extends State<Pulling> {
           );
         },
       ),
-      floatingActionButton: SpeedDial(
-        icon: Icons.menu,
-        activeIcon: Icons.close,
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-        activeBackgroundColor: Colors.blue,
-        activeForegroundColor: Colors.white,
-        visible: true,
-        closeManually: false,
-        curve: Curves.bounceIn,
-        overlayColor: Colors.black,
-        overlayOpacity: 0.0,
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-              child: Icon(FontAwesomeIcons.filter),
-              backgroundColor: Colors.deepPurple,
+      floatingActionButton: BlocListener<WorkcenterCubit, WorkcenterState>(
+        listener: (context, state) {
+          if (state is SkipWorkcenterLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return const CustomLoading();
+              },
+            );
+          }
+          if (state is SkipWorkcenterLoaded) {
+            Navigator.pop(context);
+            var message = state.message;
+            var statusCode = state.statusCode;
+            var json = state.json;
+            if (statusCode == 200) {
+              MyAlertDialog.successDialog(context, message);
+            } else if (statusCode == 400) {
+              MyAlertDialog.warningDialog(context, '$message \n ${json['msg']}');
+            }
+          }
+          if (state is UnSkipWorkcenterLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return const CustomLoading();
+              },
+            );
+          }
+          if (state is UnSkipWorkcenterLoaded) {
+            Navigator.pop(context);
+            var message = state.message;
+            var statusCode = state.statusCode;
+            var json = state.json;
+            if (statusCode == 200) {
+              MyAlertDialog.successDialog(context, message);
+            } else if (statusCode == 400) {
+              MyAlertDialog.warningDialog(context, '$message \n ${json['msg']}');
+            }
+          }
+        },
+        child: SpeedDial(
+          icon: Icons.menu,
+          activeIcon: Icons.close,
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          activeBackgroundColor: Colors.blue,
+          activeForegroundColor: Colors.white,
+          visible: true,
+          closeManually: false,
+          curve: Curves.bounceIn,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.0,
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+                child: Icon(FontAwesomeIcons.filter),
+                backgroundColor: Colors.deepPurple,
+                foregroundColor: Colors.white,
+                label: 'Filter Data',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: show),
+            SpeedDialChild(
+              child: Icon(Icons.qr_code_sharp),
+              backgroundColor: Colors.red,
               foregroundColor: Colors.white,
-              label: 'Filter Data',
+              label: 'Insert',
               labelStyle: TextStyle(fontSize: 18.0),
-              onTap: show),
-          SpeedDialChild(
-            child: Icon(Icons.qr_code_sharp),
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
-            label: 'Insert',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () {
-              Navigator.pushNamed(context, INSERT_PULLING);
-            },
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.qr_code_sharp),
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            label: 'Skip Work Center',
-            labelStyle: TextStyle(fontSize: 18.0),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.qr_code_sharp),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.green,
-            label: 'Unskip Work Center',
-            labelStyle: TextStyle(fontSize: 18.0),
-          ),
+              onTap: () {
+                Navigator.pushNamed(context, INSERT_PULLING);
+              },
+            ),
+            SpeedDialChild(
+                child: Icon(Icons.qr_code_sharp),
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                label: 'Skip Work Center',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  BlocProvider.of<WorkcenterCubit>(context).skipWorkCenter();
+                }),
+            SpeedDialChild(
+                child: Icon(Icons.qr_code_sharp),
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+                label: 'Unskip Work Center',
+                labelStyle: TextStyle(fontSize: 18.0),
+                onTap: () {
+                  BlocProvider.of<WorkcenterCubit>(context).unskipWorkCenter();
+                }),
 
-          //add more menu item childs here
-        ],
+            //add more menu item childs here
+          ],
+        ),
       ),
     );
   }

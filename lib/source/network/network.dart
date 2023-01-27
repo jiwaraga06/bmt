@@ -49,12 +49,91 @@ class MyNetwork {
       var url = Uri.parse(MyApi.pullingSave());
       var response = await http.post(
         url,
-        headers: {'Accept': 'application/json', 'Content-Type': 'application/json'},
-        body: jsonEncode(body),
+        // headers: {'Accept': 'application/json'},
+        body: body,
       );
       return response;
     } catch (e) {
       print('ERROR NETWORK PULLING SAVE');
+    }
+  }
+
+  Future pullingskipwc(shift, nik, scan) async {
+    try {
+      var url = Uri.parse(MyApi.pullingskipwc(shift, nik, scan));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PULLING SKIP WC');
+    }
+  }
+
+  Future pullingunskipwc(shift, nik, scan) async {
+    try {
+      var url = Uri.parse(MyApi.pullingunskipwc(shift, nik, scan));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PULLING UN SKIP WC');
+    }
+  }
+
+  Future putawayScan(scan, nik, shift) async {
+    try {
+      var url = Uri.parse(MyApi.putawayScan(scan, nik, shift));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK SCAN PUTAWAY: $json');
+    }
+  }
+
+  Future putaway(nik, tglAwal, tglAkhir) async {
+    try {
+      var url = Uri.parse(MyApi.putaway(nik, tglAwal, tglAkhir));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PUTAWAY : $e');
+    }
+  }
+
+  Future saveputaway(body) async {
+    try {
+      var url = Uri.parse(MyApi.putawaySave());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PUTAWAY SAVE: $e');
+    }
+  }
+
+  Future putawayDetailSave(nik) async {
+    try {
+      var url = Uri.parse(MyApi.putawayDetailSave(nik));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PUTAWAY DETAIL SAVE: $e');
+    }
+  }
+
+  Future clearDetailSavePutAway(body) async {
+    try {
+      var url = Uri.parse(MyApi.clearDetailSavePutAway());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK CLEAR DETAIL SAVE PUTAWAY: $e');
+    }
+  }
+  Future saveDataPutAway(body) async {
+    try {
+      var url = Uri.parse(MyApi.saveDataPutAway());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK SAVE DATA PUTAWAY: $e');
     }
   }
 }

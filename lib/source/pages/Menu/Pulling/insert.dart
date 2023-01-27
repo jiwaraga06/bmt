@@ -22,10 +22,26 @@ class _InsertPullingState extends State<InsertPulling> {
   TextEditingController controllerWorkCenterFrom = TextEditingController();
   TextEditingController controllerWorkCenterTo = TextEditingController();
   TextEditingController controllerQtyOk = TextEditingController();
+  TextEditingController controllerQtyAvailable = TextEditingController();
   TextEditingController controllerQtyRepair = TextEditingController();
   TextEditingController controllerQtyNG = TextEditingController();
   final formKey = GlobalKey<FormState>();
-  String? wc_to_id, wc_from_id, last_wc,qty_real;
+  String? wc_to_id, wc_from_id, last_wc, qty_real;
+  save() {
+    if (formKey.currentState!.validate()) {
+      BlocProvider.of<SavePullingCubit>(context).savePulling(
+        controllerBoxNumber.text,
+        controllerQtyOk.text,
+        controllerQtyRepair.text,
+        controllerQtyNG.text,
+        wc_to_id,
+        wc_from_id,
+        qty_real,
+        last_wc,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,48 +80,62 @@ class _InsertPullingState extends State<InsertPulling> {
                         controllerBoxNumber = TextEditingController(text: json['rows'][0]['box_number']);
                         controllerWorkCenterFrom = TextEditingController(text: json['rows'][0]['wc_from']);
                         controllerWorkCenterTo = TextEditingController(text: json['rows'][0]['wc_to']);
+                        controllerQtyAvailable = TextEditingController(text: json['rows'][0]['qty_available']);
                         wc_to_id = json['rows'][0]['wc_to_id'];
                         wc_from_id = json['rows'][0]['wc_from_id'];
                         last_wc = json['last_wc'].toString();
-                        qty_real =  json['rows'][0]['qty_real'].toString();
+                        qty_real = json['rows'][0]['qty_real'].toString();
                       });
                     }
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Form(
+                      key: formKey,
                       child: Column(
                         children: [
                           CustomFormFieldRead(
                             controller: controllerWO,
                             label: 'Work Order',
+                            msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerBoxNumber,
                             label: 'Box Number',
+                            msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerWorkCenterFrom,
                             label: 'Work Center From',
+                            msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerWorkCenterTo,
                             label: 'Work Center To',
+                            msgError: 'Kolom harus di isi',
+                          ),
+                          CustomFormFieldRead(
+                            controller: controllerQtyAvailable,
+                            label: 'Work Center To',
+                            msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
                             controller: controllerQtyOk,
                             label: 'Quantity OK',
+                            msgError: 'Kolom harus di isi',
                             inputType: TextInputType.number,
                           ),
                           CustomFormField(
                             controller: controllerQtyRepair,
                             label: 'Quantity Repair',
                             inputType: TextInputType.number,
+                            msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
                             controller: controllerQtyNG,
                             label: 'Quantity NG',
                             inputType: TextInputType.number,
+                            msgError: 'Kolom harus di isi',
                           ),
                         ],
                       ),
@@ -135,11 +165,10 @@ class _InsertPullingState extends State<InsertPulling> {
                       Navigator.pop(context);
                       var message = state.json;
                       var statusCode = state.statusCode;
-                      if(statusCode == 200){
-                        MyAlertDialog.warningDialog(context, message);
+                      if (statusCode == 200) {
+                        MyAlertDialog.successDialog(context, message);
                       } else {
                         MyAlertDialog.warningDialog(context, message);
-
                       }
                     }
                   },
@@ -150,16 +179,7 @@ class _InsertPullingState extends State<InsertPulling> {
                       height: 50,
                       child: CustomButtonSave(
                         onPressed: () {
-                          BlocProvider.of<SavePullingCubit>(context).savePulling(
-                            controllerBoxNumber.text,
-                            controllerQtyOk.text,
-                            controllerQtyRepair.text,
-                            controllerQtyNG.text,
-                            wc_to_id,
-                            wc_from_id,
-                            qty_real,
-                            last_wc,
-                          );
+                          save();
                         },
                       ),
                     ),

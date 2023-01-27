@@ -18,7 +18,7 @@ class SavePullingCubit extends Cubit<SavePullingState> {
     var username = pref.getString('username');
     var body = {
       "nik": nik,
-      "shift": shift,
+      "sift": shift,
       "box_number": boxNumber,
       "qty_ok": qtyOk,
       "qty_repair": qtyRepair,
@@ -35,6 +35,9 @@ class SavePullingCubit extends Cubit<SavePullingState> {
       print('Save Pulling:  $json');
       if (json['status'] == 'error') {
         emit(SavePullingLoaded(json: json['msg'], statusCode: 400));
+      } else {
+        emit(SavePullingLoaded(json: json['msg'], statusCode: 200));
+
       }
     });
   }

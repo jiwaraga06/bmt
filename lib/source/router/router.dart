@@ -3,6 +3,7 @@ import 'package:bmt/source/pages/Auth/splash.dart';
 import 'package:bmt/source/pages/Menu/PackingList/packinglist.dart';
 import 'package:bmt/source/pages/Menu/Pulling/insert.dart';
 import 'package:bmt/source/pages/Menu/Pulling/pulling.dart';
+import 'package:bmt/source/pages/Menu/PutAway/insert.dart';
 import 'package:bmt/source/pages/Menu/PutAway/putaway.dart';
 import 'package:bmt/source/pages/Menu/ReceivePulling/receivepulling.dart';
 import 'package:bmt/source/pages/Menu/bottomNavBar.dart';
@@ -29,6 +30,8 @@ class RouterNavigation {
         return MaterialPageRoute(builder: (context) => PacklingList());
       case PUT_AWAY:
         return MaterialPageRoute(builder: (context) => PutAway());
+      case INSERT_PUT_AWAY:
+        return MaterialPageRoute(builder: (context) => InsertPutAway());
       default:
         return null;
     }

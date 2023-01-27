@@ -1,4 +1,5 @@
 import 'package:bmt/source/data/Auth/cubit/splash_cubit.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Loading"),
+            CupertinoActivityIndicator(radius: 15),
           ],
         ),
       ),
