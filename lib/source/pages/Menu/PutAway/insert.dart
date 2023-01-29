@@ -1,5 +1,6 @@
 import 'package:bmt/source/data/Menu/PutAway/cubit/detail_save_putaway_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/insert_put_away_cubit.dart';
+import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/save_put_away_cubit.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:bmt/source/widget/customBtnScanQr.dart';
@@ -27,7 +28,7 @@ class _InsertPutAwayState extends State<InsertPutAway> {
   String? customer_id, wo_oid, wop_pt_id, invp_wopl_oid, wopl_code_box;
 
   save() {
-    if (formKey.currentState!.validate()) {
+    // if (formKey.currentState!.validate()) {
     Navigator.pop(context);
     BlocProvider.of<SavePutAwayCubit>(context).savePutAway(
       controllerQty.text,
@@ -41,7 +42,7 @@ class _InsertPutAwayState extends State<InsertPutAway> {
       controllerCust.text,
       wop_pt_id,
     );
-    }
+    // }
   }
 
   @override
@@ -85,7 +86,14 @@ class _InsertPutAwayState extends State<InsertPutAway> {
                   var json = state.json;
                   var statusCode = state.statusCode;
                   if (statusCode == 200) {
-                    MyAlertDialog.successDialog(context, json['msg']);
+                    MyAlertDialog.successDialog(
+                      context,
+                      json['msg'],
+                      () {
+                        Navigator.pop(context);
+                        BlocProvider.of<PutawayCubit>(context).currentPutaway();
+                      },
+                    );
                   } else {
                     MyAlertDialog.warningDialog(context, json['msg']);
                   }
@@ -174,9 +182,14 @@ class _InsertPutAwayState extends State<InsertPutAway> {
                                     TextButton(
                                         onPressed: () {
                                           save();
+                                          controllerBoxNum.clear();
+                                          controllerCust.clear();
+                                          controllerLot.clear();
+                                          controllerQty.clear();
+                                          controllerQtyAvailable.clear();
                                         },
                                         child: Text(
-                                          'SAVE',
+                                          'ADD DETAIL',
                                           style: TextStyle(color: Colors.blue[700], fontSize: 16),
                                         )),
                                   ],

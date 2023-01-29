@@ -13,30 +13,7 @@ class PutAway extends StatefulWidget {
 }
 
 class _PutAwayState extends State<PutAway> {
-  DateTimeRange? _selectedDateRange;
-  var tanggalAwal, tanggalAkhir;
   bool isSearch = false;
-  void show() async {
-    final DateTimeRange? result = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2021, 1, 1),
-      lastDate: DateTime.now(),
-      currentDate: DateTime.now(),
-      saveText: 'Done',
-    );
-
-    if (result != null) {
-      // Rebuild the UI
-      print(result.start.toString());
-      print(result.end.toString());
-      setState(() {
-        _selectedDateRange = result;
-        tanggalAwal = _selectedDateRange!.start.toString().split(' ')[0];
-        tanggalAkhir = _selectedDateRange!.end.toString().split(' ')[0];
-        BlocProvider.of<PutawayCubit>(context).putaway(tanggalAwal, tanggalAkhir);
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -121,14 +98,14 @@ class _PutAwayState extends State<PutAway> {
                             flex: 1,
                             child: Row(
                               children: [
-                                Text(data['packl_date'], style: TextStyle(fontSize: 16)),
+                                Text(data['packl_date'], style: TextStyle(fontSize: 15)),
                               ],
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8.0),
-                      Text('${data['ptnr_name']}', style: TextStyle(fontSize: 16)),
+                      Text('${data['ptnr_name']}', style: TextStyle(fontSize: 15)),
                       const SizedBox(height: 8.0),
                       Table(
                         columnWidths: const {
@@ -137,14 +114,17 @@ class _PutAwayState extends State<PutAway> {
                         },
                         children: [
                           TableRow(children: [
-                            Text('Lot Number', style: TextStyle(fontSize: 15)),
-                            Text(':', style: TextStyle(fontSize: 15)),
-                            Text(data['packld_lot_no'], style: TextStyle(fontSize: 15)),
+                            Text('Lot Number'),
+                            Text(':'),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Text(data['packld_lot_no']),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text('Qty', style: TextStyle(fontSize: 15)),
-                            Text(':', style: TextStyle(fontSize: 15)),
-                            Text(data['packld_qty_pack'], style: TextStyle(fontSize: 15)),
+                            Text('Qty'),
+                            Text(':'),
+                            Text(data['packld_qty_pack']),
                           ]),
                         ],
                       )
@@ -175,7 +155,9 @@ class _PutAwayState extends State<PutAway> {
                 foregroundColor: Colors.white,
                 label: 'Filter Data',
                 labelStyle: TextStyle(fontSize: 18.0),
-                onTap: show),
+                onTap: () {
+                  Navigator.pushNamed(context, FILTER_PUT_AWAY);
+                }),
             SpeedDialChild(
               child: Icon(Icons.add),
               backgroundColor: Colors.red,
