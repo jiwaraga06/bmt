@@ -14,7 +14,7 @@ class MyAlertDialog {
     )..show();
   }
 
-  static successDialog(context, message) {
+  static successDialog(context, message,VoidCallback? btnOkPressed) {
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
@@ -22,7 +22,7 @@ class MyAlertDialog {
       title: 'Success !',
       desc: message,
       btnCancelOnPress: () {},
-      btnOkOnPress: () {},
+      btnOkOnPress: btnOkPressed,
     )..show();
   }
   static infoDialog(context, message) {

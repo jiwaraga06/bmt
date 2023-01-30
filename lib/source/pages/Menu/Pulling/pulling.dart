@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Pulling extends StatefulWidget {
   const Pulling({super.key});
@@ -17,30 +18,8 @@ class Pulling extends StatefulWidget {
 }
 
 class _PullingState extends State<Pulling> {
-  DateTimeRange? _selectedDateRange;
-  var tanggalAwal, tanggalAkhir;
-  bool isSearch = false;
-  void show() async {
-    final DateTimeRange? result = await showDateRangePicker(
-      context: context,
-      firstDate: DateTime(2021, 1, 1),
-      lastDate: DateTime.now(),
-      currentDate: DateTime.now(),
-      saveText: 'Done',
-    );
 
-    if (result != null) {
-      // Rebuild the UI
-      print(result.start.toString());
-      print(result.end.toString());
-      setState(() {
-        _selectedDateRange = result;
-        tanggalAwal = _selectedDateRange!.start.toString().split(' ')[0];
-        tanggalAkhir = _selectedDateRange!.end.toString().split(' ')[0];
-        BlocProvider.of<PullingCubit>(context).getPulling(tanggalAwal, tanggalAkhir);
-      });
-    }
-  }
+  bool isSearch = false;
 
   @override
   void initState() {
@@ -128,14 +107,14 @@ class _PullingState extends State<Pulling> {
                             flex: 1,
                             child: Row(
                               children: [
-                                Text(data['invp_date'], style: TextStyle(fontSize: 16)),
+                                Text(data['invp_date'], style: TextStyle(fontSize: 15)),
                               ],
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 8.0),
-                      Text('${data['pt_code']} ${data['pt_desc1']}', style: TextStyle(fontSize: 16)),
+                      Text('${data['pt_code']} ${data['pt_desc1']}', style: TextStyle(fontSize: 15)),
                       const SizedBox(height: 8.0),
                       Table(
                         columnWidths: const {
@@ -144,19 +123,25 @@ class _PullingState extends State<Pulling> {
                         },
                         children: [
                           TableRow(children: [
-                            Text('Box Number', style: TextStyle(fontSize: 15)),
-                            Text(':', style: TextStyle(fontSize: 15)),
-                            Text(data['wopl_code'], style: TextStyle(fontSize: 15)),
+                            Text('Box Number'),
+                            Text(':'),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 2.0),
+                              child: Text(data['wopl_code']),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text('Current WC', style: TextStyle(fontSize: 15)),
-                            Text(':', style: TextStyle(fontSize: 15)),
-                            Text(data['wc_desc'], style: TextStyle(fontSize: 15)),
+                            Text('Current WC'),
+                            Text(':'),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 2.0),
+                              child: Text(data['wc_desc']),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text('Qty', style: TextStyle(fontSize: 15)),
-                            Text(':', style: TextStyle(fontSize: 15)),
-                            Text(data['invp_qty'], style: TextStyle(fontSize: 15)),
+                            Text('Qty'),
+                            Text(':'),
+                            Text(data['invp_qty']),
                           ]),
                         ],
                       )
@@ -173,7 +158,7 @@ class _PullingState extends State<Pulling> {
           if (state is SkipWorkcenterLoading) {
             showDialog(
               context: context,
-              barrierDismissible: true,
+              barrierDismissible: false,
               builder: (context) {
                 return const CustomLoading();
               },
@@ -185,7 +170,9 @@ class _PullingState extends State<Pulling> {
             var statusCode = state.statusCode;
             var json = state.json;
             if (statusCode == 200) {
-              MyAlertDialog.successDialog(context, message);
+              MyAlertDialog.successDialog(context, message, () {
+                BlocProvider.of<PullingCubit>(context).getCurrentPulling();
+              });
             } else if (statusCode == 400) {
               MyAlertDialog.warningDialog(context, '$message \n ${json['msg']}');
             }
@@ -193,7 +180,7 @@ class _PullingState extends State<Pulling> {
           if (state is UnSkipWorkcenterLoading) {
             showDialog(
               context: context,
-              barrierDismissible: true,
+              barrierDismissible: false,
               builder: (context) {
                 return const CustomLoading();
               },
@@ -205,7 +192,9 @@ class _PullingState extends State<Pulling> {
             var statusCode = state.statusCode;
             var json = state.json;
             if (statusCode == 200) {
-              MyAlertDialog.successDialog(context, message);
+              MyAlertDialog.successDialog(context, message, () {
+                BlocProvider.of<PullingCubit>(context).getCurrentPulling();
+              });
             } else if (statusCode == 400) {
               MyAlertDialog.warningDialog(context, '$message \n ${json['msg']}');
             }
@@ -231,7 +220,9 @@ class _PullingState extends State<Pulling> {
                 foregroundColor: Colors.white,
                 label: 'Filter Data',
                 labelStyle: TextStyle(fontSize: 18.0),
-                onTap: show),
+                onTap: () {
+                  Navigator.pushNamed(context, FILTER_PULLING);
+                },),
             SpeedDialChild(
               child: Icon(Icons.qr_code_sharp),
               backgroundColor: Colors.red,

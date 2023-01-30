@@ -127,6 +127,7 @@ class MyNetwork {
       print('ERROR NETWORK CLEAR DETAIL SAVE PUTAWAY: $e');
     }
   }
+
   Future saveDataPutAway(body) async {
     try {
       var url = Uri.parse(MyApi.saveDataPutAway());
@@ -134,6 +135,17 @@ class MyNetwork {
       return response;
     } catch (e) {
       print('ERROR NETWORK SAVE DATA PUTAWAY: $e');
+    }
+  }
+
+  // PACKING LIST
+  Future getPackingList(nik, tanggalAwal, tanggalAkhir) async {
+    try {
+      var url = Uri.parse(MyApi.getPackingList(nik, tanggalAwal, tanggalAkhir));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK GET PACKING LIST: $e');
     }
   }
 }

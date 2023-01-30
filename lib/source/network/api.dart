@@ -49,8 +49,12 @@ class MyApi {
     return '$baseUrl/pages/packing_list/clear_detail';
   }
 
-  static saveDataPutAway(){
+  static saveDataPutAway() {
     return '$baseUrl/pages/packing_list/save_data';
+  }
 
+  // PACKING LIST
+  static getPackingList(nik, tanggalAwal, tanggalAkhir) {
+    return '$baseUrl/pages/packing_list_v2/get/$nik/$tanggalAwal/$tanggalAkhir';
   }
 }

@@ -55,19 +55,24 @@ class MyRepository {
     return json;
   }
 
-  Future putawayDetailSave(nik)async {
+  Future putawayDetailSave(nik) async {
     var json = await myNetwork!.putawayDetailSave(nik);
     return json;
   }
 
-  Future clearDetailSavePutAway(body)async{
+  Future clearDetailSavePutAway(body) async {
     var json = await myNetwork!.clearDetailSavePutAway(body);
     return json;
   }
 
-  Future saveDataPutAway(body) async{
+  Future saveDataPutAway(body) async {
     var json = await myNetwork!.saveDataPutAway(body);
     return json;
   }
 
+  // PACKING LIST
+  Future getPackingList(nik, tanggalAwal, tanggalAkhir) async {
+    var json = await myNetwork!.getPackingList(nik, tanggalAwal, tanggalAkhir);
+    return json;
+  }
 }

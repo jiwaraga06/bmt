@@ -1,4 +1,5 @@
 import 'package:bmt/source/data/Menu/Pulling/cubit/insert_scan_cubit.dart';
+import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/save_pulling_cubit.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:bmt/source/widget/customBtnSave.dart';
@@ -29,16 +30,16 @@ class _InsertPullingState extends State<InsertPulling> {
   String? wc_to_id, wc_from_id, last_wc, qty_real;
   save() {
     // if (formKey.currentState!.validate()) {
-      BlocProvider.of<SavePullingCubit>(context).savePulling(
-        controllerBoxNumber.text,
-        controllerQtyOk.text,
-        controllerQtyRepair.text,
-        controllerQtyNG.text,
-        wc_to_id,
-        wc_from_id,
-        qty_real,
-        last_wc,
-      );
+    BlocProvider.of<SavePullingCubit>(context).savePulling(
+      controllerBoxNumber.text,
+      controllerQtyOk.text,
+      controllerQtyRepair.text,
+      controllerQtyNG.text,
+      wc_to_id,
+      wc_from_id,
+      qty_real,
+      last_wc,
+    );
     // }
   }
 
@@ -59,6 +60,7 @@ class _InsertPullingState extends State<InsertPulling> {
                     onTap: () {
                       BlocProvider.of<InsertScanCubit>(context).scanInsert();
                     },
+                    text: 'Scan QR Code',
                   ),
                 ),
                 BlocListener<InsertScanCubit, InsertScanState>(
@@ -66,7 +68,7 @@ class _InsertPullingState extends State<InsertPulling> {
                     if (state is InsertScanLoading) {
                       showDialog(
                         context: context,
-                        barrierDismissible: true,
+                        barrierDismissible: false,
                         builder: (context) {
                           return const CustomLoading();
                         },
@@ -155,7 +157,7 @@ class _InsertPullingState extends State<InsertPulling> {
                     if (state is SavePullingLoading) {
                       showDialog(
                         context: context,
-                        barrierDismissible: true,
+                        barrierDismissible: false,
                         builder: (context) {
                           return const CustomLoading();
                         },
@@ -166,7 +168,14 @@ class _InsertPullingState extends State<InsertPulling> {
                       var message = state.json;
                       var statusCode = state.statusCode;
                       if (statusCode == 200) {
-                        MyAlertDialog.successDialog(context, message);
+                        MyAlertDialog.successDialog(
+                          context,
+                          message,
+                          () {
+                            Navigator.pop(context);
+                            BlocProvider.of<PullingCubit>(context).getCurrentPulling();
+                          },
+                        );
                       } else {
                         MyAlertDialog.warningDialog(context, message);
                       }

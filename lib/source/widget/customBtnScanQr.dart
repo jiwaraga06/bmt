@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class CustomButtonScanQR extends StatelessWidget {
   final VoidCallback? onTap;
+  final String? text;
   const CustomButtonScanQR({
     super.key,
     this.onTap,
+    this.text,
   });
 
   @override
@@ -22,7 +24,7 @@ class CustomButtonScanQR extends StatelessWidget {
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(Icons.qr_code_sharp), Text(' Scan QR Code')],
+            children: [Icon(Icons.qr_code_sharp), Text(text!)],
           ),
         ),
       ),
