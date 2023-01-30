@@ -1,6 +1,8 @@
+import 'package:bmt/source/data/Menu/PackingList/cubit/header_packing_list_cubit.dart';
 import 'package:bmt/source/widget/customBtnScanQr.dart';
 import 'package:bmt/source/widget/customTextField.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HeaderPackingList extends StatefulWidget {
   const HeaderPackingList({super.key});
@@ -25,7 +27,9 @@ class _HeaderPackingListState extends State<HeaderPackingList> {
           Padding(
             padding: const EdgeInsets.only(top: 20.0, left: 8.0, right: 8.0, bottom: 12.0),
             child: CustomButtonScanQR(
-              onTap: () {},
+              onTap: () {
+                BlocProvider.of<HeaderPackingListCubit>(context).scanHeader();
+              },
               text: 'Scan Delivery Order',
             ),
           ),

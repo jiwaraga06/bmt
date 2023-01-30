@@ -14,11 +14,12 @@ class PacklingList extends StatefulWidget {
 
 class _PacklingListState extends State<PacklingList> {
   bool isSearch = false;
-@override
-void initState() {
-  super.initState();
-  BlocProvider.of<PackingListCubit>(context).getPackingListCurrent();
-}
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<PackingListCubit>(context).getPackingListCurrent();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +35,13 @@ void initState() {
               : Text('Packing List'),
           actions: [
             IconButton(
-                onPressed: () {
-                  setState(() {
-                    isSearch = !isSearch;
-                  });
-                },
-                icon: isSearch ? Icon(Icons.close) : Icon(Icons.search)),
+              onPressed: () {
+                setState(() {
+                  isSearch = !isSearch;
+                });
+              },
+              icon: isSearch ? Icon(Icons.close) : Icon(Icons.search),
+            ),
           ],
         ),
         body: BlocBuilder<PackingListCubit, PackingListState>(
