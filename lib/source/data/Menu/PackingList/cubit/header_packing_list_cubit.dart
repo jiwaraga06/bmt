@@ -9,6 +9,10 @@ part 'header_packing_list_state.dart';
 class HeaderPackingListCubit extends Cubit<HeaderPackingListState> {
   final MyRepository? myRepository;
   HeaderPackingListCubit({required this.myRepository}) : super(HeaderPackingListInitial());
+  
+  void header() {
+    print('header');
+  }
 
   void scanHeader() async {
     String barcodeScanRes;

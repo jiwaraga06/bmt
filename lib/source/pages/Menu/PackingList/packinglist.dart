@@ -79,8 +79,8 @@ class _PacklingListState extends State<PacklingList> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('do_code', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                            Text('do_date', style: TextStyle(fontSize: 15)),
+                            Text(data['do_code'].toString(), style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                            Text(data['do_date'].toString(), style: TextStyle(fontSize: 15)),
                           ],
                         ),
                         const SizedBox(height: 8.0),
@@ -89,13 +89,13 @@ class _PacklingListState extends State<PacklingList> {
                             0: FixedColumnWidth(90),
                             1: FixedColumnWidth(10),
                           },
-                          children: const [
+                          children: [
                             TableRow(children: [
                               Text('SO Number'),
                               Text(':'),
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
-                                child: Text('so_code'),
+                                child: Text(data['so_code']),
                               ),
                             ]),
                             TableRow(children: [
@@ -103,7 +103,7 @@ class _PacklingListState extends State<PacklingList> {
                               Text(':'),
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
-                                child: Text('ptnr_name_sold'),
+                                child: Text(data['ptnr_name_sold']),
                               ),
                             ]),
                             TableRow(children: [
@@ -111,7 +111,7 @@ class _PacklingListState extends State<PacklingList> {
                               Text(':'),
                               Padding(
                                 padding: const EdgeInsets.only(top: 2.0),
-                                child: Text('do_dlv_date'),
+                                child: Text(data['do_dlv_date']),
                               ),
                             ]),
                           ],

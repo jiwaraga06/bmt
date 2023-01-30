@@ -9,6 +9,11 @@ part 'detail_packing_list_state.dart';
 class DetailPackingListCubit extends Cubit<DetailPackingListState> {
   final MyRepository? myRepository;
   DetailPackingListCubit({required this.myRepository}) : super(DetailPackingListInitial());
+
+  void detail() {
+    print('detail');
+  }
+
   void scanDetail() async {
     String barcodeScanRes;
     try {

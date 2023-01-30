@@ -1,6 +1,9 @@
+import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_cubit.dart';
+import 'package:bmt/source/data/Menu/PackingList/cubit/header_packing_list_cubit.dart';
 import 'package:bmt/source/pages/Menu/PackingList/detail.dart';
 import 'package:bmt/source/pages/Menu/PackingList/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InsertPackingList extends StatefulWidget {
   const InsertPackingList({super.key});
@@ -15,6 +18,7 @@ class _InsertPackingListState extends State<InsertPackingList> with TickerProvid
     HeaderPackingList(),
     DetailPackingList(),
   ];
+  
   @override
   void initState() {
     super.initState();
@@ -37,6 +41,11 @@ class _InsertPackingListState extends State<InsertPackingList> with TickerProvid
           TextButton(
             onPressed: () {
               print(_tabController!.index);
+              if (_tabController!.index == 0) {
+                BlocProvider.of<HeaderPackingListCubit>(context).header();
+              } else {
+                BlocProvider.of<DetailPackingListCubit>(context).detail();
+              }
             },
             child: Text('SAVE', style: TextStyle(color: Colors.blue)),
           )
