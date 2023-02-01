@@ -55,8 +55,18 @@ class MyRepository {
     return json;
   }
 
+  Future deletePutAway(body) async {
+    var json = await myNetwork!.deletePutAway(body);
+    return json;
+  }
+
   Future putawayDetailSave(nik) async {
     var json = await myNetwork!.putawayDetailSave(nik);
+    return json;
+  }
+
+  Future putawayPrint(packld_oid) async {
+    var json = await myNetwork!.putawayPrint(packld_oid);
     return json;
   }
 
@@ -73,6 +83,35 @@ class MyRepository {
   // PACKING LIST
   Future getPackingList(nik, tanggalAwal, tanggalAkhir) async {
     var json = await myNetwork!.getPackingList(nik, tanggalAwal, tanggalAkhir);
+    return json;
+  }
+
+  Future packingListHeader(scan) async {
+    var json = await myNetwork!.packingListHeader(scan);
+    return json;
+  }
+
+  Future packingListDetailScan(body) async {
+    var json = await myNetwork!.packingListDetailScan(body);
+    return json;
+  }
+
+  Future packingListDetailAdd(body) async {
+    var json = await myNetwork!.packingListDetailAdd(body);
+    return json;
+  }
+
+  Future packingListDetailGet(nik) async {
+    var json = await myNetwork!.packingListDetailGet(nik);
+    return json;
+  }
+  Future packingListDetailSave(body) async {
+    var json = await myNetwork!.packingListDetailSave(body);
+    return json;
+  }
+
+  Future packingListDetailClear(body) async {
+    var json = await myNetwork!.packingListDetailClear(body);
     return json;
   }
 }

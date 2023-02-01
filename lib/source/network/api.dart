@@ -45,6 +45,18 @@ class MyApi {
     return '$baseUrl/pages/packing_list/get_detail/$nik';
   }
 
+  static putawayDelete() {
+    return '$baseUrl/pages/packing_list/delete_data';
+  }
+
+  static putawayPrint(packld_oid) {
+    return '$baseUrl/pages/packing_list/print/$packld_oid';
+  }
+
+  static qrPutAwayPrint(gambar) {
+    return '$baseUrl/assets/images/$gambar';
+  }
+
   static clearDetailSavePutAway() {
     return '$baseUrl/pages/packing_list/clear_detail';
   }
@@ -56,5 +68,28 @@ class MyApi {
   // PACKING LIST
   static getPackingList(nik, tanggalAwal, tanggalAkhir) {
     return '$baseUrl/pages/packing_list_v2/get/$nik/$tanggalAwal/$tanggalAkhir';
+  }
+
+  static packingListHeader(scan) {
+    return '$baseUrl/pages/packing_list_v2/scan/$scan';
+  }
+
+  static packingListDetailScan() {
+    return '$baseUrl/pages/packing_list_v2/scan_detail/';
+  }
+
+  static packingListDetailAdd() {
+    return '$baseUrl/pages/packing_list_v2/add_detail';
+  }
+
+  static packingListDetailGet(nik) {
+    return '$baseUrl/pages/packing_list_v2/get_detail/$nik';
+  }
+  static packingListDetailSave() {
+    return '$baseUrl/pages/packing_list_v2/save_data';
+  }
+
+  static packingListDetailClear() {
+    return '$baseUrl/pages/packing_list_v2/clear_detail';
   }
 }

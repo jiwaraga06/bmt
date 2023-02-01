@@ -260,7 +260,7 @@ class _InsertPutAwayState extends State<InsertPutAway> {
                   }
                   if (state is DetailSavePutawayLoaded == false) {
                     return const Center(
-                      child: Text('No Data'),
+                      // child: Text('No Data'),
                     );
                   }
                   var json = (state as DetailSavePutawayLoaded).json;

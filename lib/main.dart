@@ -2,13 +2,17 @@ import 'package:bmt/source/data/Auth/cubit/account_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/login_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/shift_cubit.dart';
 import 'package:bmt/source/data/Auth/cubit/splash_cubit.dart';
+import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_get_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_cubit.dart';
+import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_load_cubit.dart';
+import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_save_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/header_packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/insert_scan_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/save_pulling_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/workcenter_cubit.dart';
+import 'package:bmt/source/data/Menu/PutAway/cubit/action_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/detail_save_putaway_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/insert_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
@@ -70,6 +74,9 @@ class MyApp extends StatelessWidget {
           create: (context) => DetailSavePutawayCubit(myRepository: myRepository),
         ),
         BlocProvider(
+          create: (context) => ActionPutAwayCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
           create: (context) => AccountCubit(myRepository: myRepository),
         ),
         BlocProvider(
@@ -80,6 +87,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DetailPackingListCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => DetailPackingListLoadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => DetailPackingListSaveCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => DetailPackingGetCubit(myRepository: myRepository),
         ),
       ],
       child: MaterialApp(

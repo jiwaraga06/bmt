@@ -76,18 +76,23 @@ class _InsertPullingState extends State<InsertPulling> {
                     }
                     if (state is InsertScanLoaded) {
                       Navigator.pop(context);
-                      setState(() {
-                        var json = state.json;
-                        controllerWO = TextEditingController(text: json['rows'][0]['wo_code']);
-                        controllerBoxNumber = TextEditingController(text: json['rows'][0]['box_number']);
-                        controllerWorkCenterFrom = TextEditingController(text: json['rows'][0]['wc_from']);
-                        controllerWorkCenterTo = TextEditingController(text: json['rows'][0]['wc_to']);
-                        controllerQtyAvailable = TextEditingController(text: json['rows'][0]['qty_available']);
-                        wc_to_id = json['rows'][0]['wc_to_id'];
-                        wc_from_id = json['rows'][0]['wc_from_id'];
-                        last_wc = json['last_wc'].toString();
-                        qty_real = json['rows'][0]['qty_real'].toString();
-                      });
+                      var statusCode = state.statusCode;
+                      var json = state.json;
+                      if (statusCode == 200) {
+                        setState(() {
+                          controllerWO = TextEditingController(text: json['rows'][0]['wo_code']);
+                          controllerBoxNumber = TextEditingController(text: json['rows'][0]['box_number']);
+                          controllerWorkCenterFrom = TextEditingController(text: json['rows'][0]['wc_from']);
+                          controllerWorkCenterTo = TextEditingController(text: json['rows'][0]['wc_to']);
+                          controllerQtyAvailable = TextEditingController(text: json['rows'][0]['qty_available']);
+                          wc_to_id = json['rows'][0]['wc_to_id'];
+                          wc_from_id = json['rows'][0]['wc_from_id'];
+                          last_wc = json['last_wc'].toString();
+                          qty_real = json['rows'][0]['qty_real'].toString();
+                        });
+                      } else {
+                        MyAlertDialog.warningDialog(context, json['msg']);
+                      }
                     }
                   },
                   child: Padding(

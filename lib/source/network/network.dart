@@ -138,6 +138,26 @@ class MyNetwork {
     }
   }
 
+  Future deletePutAway(body) async {
+    try {
+      var url = Uri.parse(MyApi.putawayDelete());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK DELETE DATA PUTAWAY: $e');
+    }
+  }
+
+  Future putawayPrint(packld_oid) async {
+    try {
+      var url = Uri.parse(MyApi.putawayPrint(packld_oid));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PRINT: $e');
+    }
+  }
+
   // PACKING LIST
   Future getPackingList(nik, tanggalAwal, tanggalAkhir) async {
     try {
@@ -146,6 +166,67 @@ class MyNetwork {
       return response;
     } catch (e) {
       print('ERROR NETWORK GET PACKING LIST: $e');
+    }
+  }
+
+  Future packingListHeader(scan) async {
+    try {
+      var url = Uri.parse(MyApi.packingListHeader(scan));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST HEADER: $e');
+    }
+  }
+
+  Future packingListDetailScan(body) async {
+    try {
+      var url = Uri.parse(MyApi.packingListDetailScan());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST DETAIL SCAN: $e');
+    }
+  }
+
+  Future packingListDetailAdd(body) async {
+    try {
+      var url = Uri.parse(MyApi.packingListDetailAdd());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST DETAIL ADD: $e');
+    }
+  }
+
+  Future packingListDetailGet(nik) async {
+    try {
+      var url = Uri.parse(MyApi.packingListDetailGet(nik));
+      var response = await http.get(
+        url,
+      );
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST DETAIL GET: $e');
+    }
+  }
+
+  Future packingListDetailSave(body) async {
+    try {
+      var url = Uri.parse(MyApi.packingListDetailSave());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST DETAIL CLEAR: $e');
+    }
+  }
+  Future packingListDetailClear(body) async {
+    try {
+      var url = Uri.parse(MyApi.packingListDetailClear());
+      var response = await http.post(url, body: body);
+      return response;
+    } catch (e) {
+      print('ERROR NETWORK PACKING LIST DETAIL CLEAR: $e');
     }
   }
 }
