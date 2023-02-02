@@ -128,6 +128,16 @@ class MyNetwork {
     }
   }
 
+  Future qrPutAwayPrint(gambar) async {
+    try {
+      var url = Uri.parse(MyApi.qrPutAwayPrint(gambar));
+      var response = await http.get(url);
+      return response;
+    } catch (e) {
+      print('ERROR QR: $e');
+    }
+  }
+
   Future saveDataPutAway(body) async {
     try {
       var url = Uri.parse(MyApi.saveDataPutAway());

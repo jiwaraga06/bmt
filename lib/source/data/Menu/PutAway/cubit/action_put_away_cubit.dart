@@ -45,17 +45,22 @@ class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
         var html = json['html'];
         print('QR:  ${json['qrcode']}');
         print('QR: http://182.253.45.29:88/api-dev04/assets/images/${json['qrcode']}.png');
-        var imageSoure = "http://182.253.45.29:88/api-dev04/assets/images/TDI001-230127-1-003.jpg";
-        try {
-          await Printing.layoutPdf(
-              onLayout: (PdfPageFormat format) async => await Printing.convertHtml(
-                    format: format,
-                    html: PDFView.htmlContent(html, imageSoure),
-                  ));
-          // print('Result print: $result');
-        } catch (e) {
-          print('Error print: $e');
-        }
+        var imageSoure = "http://182.253.45.29:88/api-dev04/assets/images/TDI001-230127-1-003.png";
+        myRepository!.qrPutaway('${json['qrcode']}.png').then((value) async {
+          var result = value.body;
+          print(result);
+
+          try {
+            await Printing.layoutPdf(
+                onLayout: (PdfPageFormat format) async => await Printing.convertHtml(
+                      format: format,
+                      html: PDFView.htmlContent(html, imageSoure),
+                    ));
+            // print('Result print: $result');
+          } catch (e) {
+            print('Error print: $e');
+          }
+        });
       } else {
         emit(ActionPrintPutAwayLoaded(json: json, statusCode: value.statusCode));
       }

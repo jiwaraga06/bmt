@@ -50,6 +50,11 @@ class MyRepository {
     return json;
   }
 
+  Future qrPutaway(gambar) async {
+    var json = await myNetwork!.qrPutAwayPrint(gambar);
+    return json;
+  }
+
   Future saveputaway(body) async {
     var json = await myNetwork!.saveputaway(body);
     return json;
