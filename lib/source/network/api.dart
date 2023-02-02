@@ -1,4 +1,4 @@
-String baseUrl = 'http://182.253.45.29:88/api-dev04/';
+String baseUrl = 'http://182.253.45.29:88/api-dev04';
 
 class MyApi {
   static getShift() {
@@ -85,6 +85,7 @@ class MyApi {
   static packingListDetailGet(nik) {
     return '$baseUrl/pages/packing_list_v2/get_detail/$nik';
   }
+
   static packingListDetailSave() {
     return '$baseUrl/pages/packing_list_v2/save_data';
   }

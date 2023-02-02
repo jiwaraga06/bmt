@@ -217,9 +217,10 @@ class MyNetwork {
       var response = await http.post(url, body: body);
       return response;
     } catch (e) {
-      print('ERROR NETWORK PACKING LIST DETAIL CLEAR: $e');
+      print('ERROR NETWORK PACKING LIST DETAIL SAVE: $e');
     }
   }
+
   Future packingListDetailClear(body) async {
     try {
       var url = Uri.parse(MyApi.packingListDetailClear());

@@ -38,19 +38,23 @@ class DetailSavePutawayCubit extends Cubit<DetailSavePutawayState> {
   void saveDataPutAway() async {
     emit(SaveDataPutawayLoading());
     SharedPreferences pref = await SharedPreferences.getInstance();
-    var scan = pref.getString('scan');
+    var username = pref.getString('scan');
     var body = {
-      "username": scan,
+      "username": username,
     };
     print(body);
     myRepository!.saveDataPutAway(body).then((value) {
-      var json = jsonDecode(value.body);
       var statusCode = value.statusCode;
-      print('SAVE DATA: $json');
-      if (json['status'] != 'error') {
-        emit(SaveDataPutawayLoaded(json: json, statusCode: 200));
+      if (statusCode == 500) {
+        emit(SaveDataPutawayLoaded(json: {'msg': 'Save Failed code: $statusCode'}, statusCode: 500));
       } else {
-        emit(SaveDataPutawayLoaded(json: json, statusCode: 400));
+        var json = jsonDecode(value.body);
+        print('SAVE DATA: $json');
+        if (json['status'] != 'error') {
+          emit(SaveDataPutawayLoaded(json: json, statusCode: 200));
+        } else {
+          emit(SaveDataPutawayLoaded(json: json, statusCode: 400));
+        }
       }
     });
   }

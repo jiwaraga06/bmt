@@ -6,6 +6,7 @@ import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_get_cubit.
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_load_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_save_cubit.dart';
+import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_save_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/header_packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/Pulling/cubit/insert_scan_cubit.dart';
@@ -96,6 +97,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DetailPackingGetCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => DetailPackingSaveCubit(myRepository: myRepository),
         ),
       ],
       child: MaterialApp(

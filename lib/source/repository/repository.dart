@@ -105,6 +105,7 @@ class MyRepository {
     var json = await myNetwork!.packingListDetailGet(nik);
     return json;
   }
+
   Future packingListDetailSave(body) async {
     var json = await myNetwork!.packingListDetailSave(body);
     return json;

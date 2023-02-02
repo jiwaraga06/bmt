@@ -11,6 +11,7 @@ class PackingListCubit extends Cubit<PackingListState> {
   final MyRepository? myRepository;
   PackingListCubit({required this.myRepository}) : super(PackingListInitial());
   var list = [];
+
   void getPackingList(tanggalAwal, tanggalAkhir) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     var barcode = pref.getString('scan');
@@ -18,7 +19,7 @@ class PackingListCubit extends Cubit<PackingListState> {
     myRepository!.getPackingList(barcode, tanggalAwal, tanggalAkhir).then((value) {
       var json = jsonDecode(value.body);
       list = json['rows'];
-      print('PACKING LIST: $json');
+      print('PACKING LIST ByDate: $json');
       if (value.statusCode == 200) {
         emit(PackingListLoaded(statusCode: 200, json: json['rows']));
       } else {

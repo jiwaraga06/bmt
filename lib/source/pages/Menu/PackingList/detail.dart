@@ -24,6 +24,7 @@ class _DetailPackingListState extends State<DetailPackingList> {
   TextEditingController controllerQty = TextEditingController();
   var packld_seq, packld_pt_id, packl_ptnr_id, dod_oid;
   void save() {
+    
     BlocProvider.of<DetailPackingListSaveCubit>(context).detaiPackingListAddDetail(
       packld_seq,
       packld_pt_id,
@@ -34,13 +35,12 @@ class _DetailPackingListState extends State<DetailPackingList> {
       controllerQty.text,
     );
     Navigator.pop(context);
-    BlocProvider.of<DetailPackingGetCubit>(context).getDetailPackingList();
   }
 
   @override
   void initState() {
     super.initState();
-    
+    BlocProvider.of<DetailPackingGetCubit>(context).getDetailPackingList();
   }
 
   @override
@@ -67,6 +67,8 @@ class _DetailPackingListState extends State<DetailPackingList> {
                   var statusCode = state.statusCode;
                   if (statusCode != 200) {
                     MyAlertDialog.warningDialog(context, json['msg']);
+                  } else {
+                    BlocProvider.of<DetailPackingGetCubit>(context).getDetailPackingList();
                   }
                 }
               },

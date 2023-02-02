@@ -12,17 +12,26 @@ class DetailPackingSaveCubit extends Cubit<DetailPackingSaveState> {
   DetailPackingSaveCubit({required this.myRepository}) : super(DetailPackingSaveInitial());
 
   void savePackingList() async {
+    emit(DetailPackingSaveLoading());
     SharedPreferences pref = await SharedPreferences.getInstance();
     var username = pref.getString('scan');
-    emit(DetailPackingSaveLoading());
-    var body = {};
+    var body = {
+      "username": '$username',
+    };
+    print(body);
     myRepository!.packingListDetailSave(body).then((value) {
-      var json = jsonDecode(value.body);
-      print('Result Save packing list: $json');
-      if (json['status'] == 'success') {
-        emit(DetailPackingSaveLoaded(json: json, statusCode: 200));
+      var statusCode = value.statusCode;
+      print(statusCode);
+      if (statusCode == 500) {
+        emit(DetailPackingSaveLoaded(json: {'msg': 'Save Failed code: 500'}, statusCode: 500));
       } else {
-        emit(DetailPackingSaveLoaded(json: json, statusCode: 400));
+        var json = jsonDecode(value.body);
+        print('Result Save packing list: $json');
+        if (json['status'] != 'error') {
+          emit(DetailPackingSaveLoaded(json: json, statusCode: 200));
+        } else {
+          emit(DetailPackingSaveLoaded(json: json, statusCode: 400));
+        }
       }
     });
   }

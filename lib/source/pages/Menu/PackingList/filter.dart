@@ -1,4 +1,6 @@
+import 'package:bmt/source/data/Menu/PackingList/cubit/packing_list_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterPackingList extends StatefulWidget {
   const FilterPackingList({super.key});
@@ -8,7 +10,7 @@ class FilterPackingList extends StatefulWidget {
 }
 
 class _FilterPackingListState extends State<FilterPackingList> {
-    TextEditingController controllerTanggalAwal = TextEditingController();
+  TextEditingController controllerTanggalAwal = TextEditingController();
   TextEditingController controllerTanggalAkhir = TextEditingController();
   void pilihTanggalAwal() async {
     var date = await showDatePicker(
@@ -62,7 +64,7 @@ class _FilterPackingListState extends State<FilterPackingList> {
       appBar: AppBar(
         title: Text('Filter Data Packing List'),
       ),
-        body: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
           children: [
@@ -82,6 +84,7 @@ class _FilterPackingListState extends State<FilterPackingList> {
             const SizedBox(height: 8.0),
             ElevatedButton(
                 onPressed: () {
+                  BlocProvider.of<PackingListCubit>(context).getPackingList(controllerTanggalAwal.text, controllerTanggalAkhir.text);
                   Navigator.pop(context);
                 },
                 child: Text('Retrieve Data'))
