@@ -93,4 +93,22 @@ class MyApi {
   static packingListDetailClear() {
     return '$baseUrl/pages/packing_list_v2/clear_detail';
   }
+
+  // RECEIVE PULLING
+
+  static recevieGet(nik, tanggalAwal, tanggalAkhir) {
+    return '$baseUrl/pages/receive/get/$nik/$tanggalAwal/$tanggalAkhir';
+  }
+
+  static receiveWorkCenter(nik) {
+    return '$baseUrl/get_function/work_center/$nik';
+  }
+
+  static receiveScan(scan) {
+    return '$baseUrl/pages/receive/scan/$scan';
+  }
+
+  static receiveSave(){
+    return '$baseUrl/pages/receive/save';
+  }
 }

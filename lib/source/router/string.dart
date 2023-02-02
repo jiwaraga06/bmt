@@ -13,6 +13,8 @@ const FILTER_PUT_AWAY = '/menu/put_away/filter';
 
 // RECEIVE PULLING
 const RECEIVE_PULLING = '/menu/receive_pulling';
+const FILTER_RECEIVE_PULLING = '/menu/receive_pulling/filter';
+const INSERT_RECEIVE_PULLING = '/menu/receive_pulling/insert';
 
 // PACKING LIST
 const PACKING_LIST = '/menu/packing_list';

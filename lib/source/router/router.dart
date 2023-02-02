@@ -9,6 +9,8 @@ import 'package:bmt/source/pages/Menu/Pulling/pulling.dart';
 import 'package:bmt/source/pages/Menu/PutAway/filter.dart';
 import 'package:bmt/source/pages/Menu/PutAway/insert.dart';
 import 'package:bmt/source/pages/Menu/PutAway/putaway.dart';
+import 'package:bmt/source/pages/Menu/ReceivePulling/filter.dart';
+import 'package:bmt/source/pages/Menu/ReceivePulling/insert.dart';
 import 'package:bmt/source/pages/Menu/ReceivePulling/receivepulling.dart';
 import 'package:bmt/source/pages/Menu/bottomNavBar.dart';
 import 'package:bmt/source/router/string.dart';
@@ -34,6 +36,10 @@ class RouterNavigation {
       // RECEIVE PULLING
       case RECEIVE_PULLING:
         return MaterialPageRoute(builder: (context) => ReceivePulling());
+      case FILTER_RECEIVE_PULLING:
+        return MaterialPageRoute(builder: (context) => FilterReceivePulling());
+      case INSERT_RECEIVE_PULLING:
+        return MaterialPageRoute(builder: (context) => InsertReceivePulling());
       // PACKINGLIST
       case PACKING_LIST:
         return MaterialPageRoute(builder: (context) => PacklingList());
