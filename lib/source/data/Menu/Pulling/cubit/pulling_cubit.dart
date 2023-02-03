@@ -23,9 +23,9 @@ class PullingCubit extends Cubit<PullingState> {
       list = json['rows'];
       print("Pulling: $json");
       if (value.statusCode == 200) {
-        emit(PullingLoaded(json: json['rows'], statusCode: value.statusCode));
+        emit(PullingLoaded(json: json['rows'], statusCode: 200));
       } else {
-        emit(PullingLoaded(json: {'message': 'Error'}, statusCode: value.statusCode));
+        emit(PullingLoaded(json: {'message': 'Error'}, statusCode: 400));
       }
     });
   }

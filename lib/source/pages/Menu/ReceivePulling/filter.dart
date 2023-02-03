@@ -1,5 +1,6 @@
 import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
+import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_cubit.dart';
 import 'package:bmt/source/widget/customTextFieldRead.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -86,6 +87,7 @@ class _FilterReceivePullingState extends State<FilterReceivePulling> {
             const SizedBox(height: 8.0),
             ElevatedButton(
                 onPressed: () {
+                  BlocProvider.of<ReceivePullingCubit>(context).recevieGet(controllerTanggalAwal.text, controllerTanggalAkhir.text);
                   Navigator.pop(context);
                 },
                 child: Text('Retrieve Data'))

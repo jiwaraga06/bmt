@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class CustomFormFieldRead extends StatelessWidget {
   final String? hint, label, msgError;
   final TextEditingController? controller;
+  final VoidCallback? onTap;
   
   CustomFormFieldRead({
     super.key,
@@ -10,6 +11,7 @@ class CustomFormFieldRead extends StatelessWidget {
     this.label,
     this.controller,
     this.msgError,
+    this.onTap,
   });
 
   @override
@@ -17,6 +19,7 @@ class CustomFormFieldRead extends StatelessWidget {
     return TextFormField(
       controller: controller,
       readOnly: true,
+      onTap: onTap,
       cursorColor: Color(0xFF0D4C92),
       style: TextStyle(
         fontSize: 17,

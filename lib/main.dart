@@ -21,6 +21,7 @@ import 'package:bmt/source/data/Menu/PutAway/cubit/save_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_cubit.dart';
 import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_insert_cubit.dart';
 import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_scan_cubit.dart';
+import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_wc_cubit.dart';
 import 'package:bmt/source/repository/repository.dart';
 import 'package:bmt/source/network/network.dart';
 import 'package:bmt/source/router/router.dart';
@@ -112,6 +113,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ReceivePullingInsertCubit(myRepository: myRepository),
+        ),
+        BlocProvider(
+          create: (context) => ReceivePullingWcCubit(myRepository: myRepository),
         ),
       ],
       child: MaterialApp(
