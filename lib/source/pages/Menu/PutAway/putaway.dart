@@ -31,6 +31,7 @@ class _PutAwayState extends State<PutAway> {
         appBar: AppBar(
           title: isSearch
               ? TextFormField(
+                  autofocus: true,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Search',

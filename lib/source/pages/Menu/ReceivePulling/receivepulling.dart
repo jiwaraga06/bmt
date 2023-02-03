@@ -26,12 +26,15 @@ class _ReceivePullingState extends State<ReceivePulling> {
         appBar: AppBar(
           title: isSearch
               ? TextFormField(
+                  autofocus: true,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Search',
                     hintStyle: TextStyle(color: Colors.white),
                   ),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    BlocProvider.of<ReceivePullingCubit>(context).searchData(value);
+                  },
                 )
               : Text('Receive Pulling'),
           actions: [
@@ -103,21 +106,21 @@ class _ReceivePullingState extends State<ReceivePulling> {
                         ),
                         const SizedBox(height: 8.0),
                         Table(
-                        columnWidths: const {
-                          0: FixedColumnWidth(90),
-                          1: FixedColumnWidth(10),
-                        },
-                        children: [
-                          TableRow(children: [
-                            Text('Qty Receive'),
-                            Text(':'),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 2.0),
-                              child: Text(data['invpr_qty_receive']),
-                            ),
-                          ]),
-                        ],
-                      )
+                          columnWidths: const {
+                            0: FixedColumnWidth(90),
+                            1: FixedColumnWidth(10),
+                          },
+                          children: [
+                            TableRow(children: [
+                              Text('Qty Receive'),
+                              Text(':'),
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 2.0),
+                                child: Text(data['invpr_qty_receive']),
+                              ),
+                            ]),
+                          ],
+                        )
                       ],
                     ),
                   );

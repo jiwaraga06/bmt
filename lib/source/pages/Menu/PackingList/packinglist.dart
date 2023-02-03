@@ -26,6 +26,7 @@ class _PacklingListState extends State<PacklingList> {
         appBar: AppBar(
           title: isSearch
               ? TextFormField(
+                  autofocus: true,
                   style: TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Search',
