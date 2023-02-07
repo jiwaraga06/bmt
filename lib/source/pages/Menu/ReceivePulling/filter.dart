@@ -1,5 +1,3 @@
-import 'package:bmt/source/data/Menu/Pulling/cubit/pulling_cubit.dart';
-import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
 import 'package:bmt/source/data/Menu/ReceivePulling/cubit/receive_pulling_cubit.dart';
 import 'package:bmt/source/widget/customTextFieldRead.dart';
 import 'package:flutter/material.dart';

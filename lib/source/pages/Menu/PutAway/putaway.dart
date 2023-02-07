@@ -29,6 +29,7 @@ class _PutAwayState extends State<PutAway> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: isSearch
               ? TextFormField(
                   autofocus: true,
@@ -41,7 +42,10 @@ class _PutAwayState extends State<PutAway> {
                     BlocProvider.of<PutawayCubit>(context).searchData(value);
                   },
                 )
-              : Text('Put Away'),
+              : Text(
+                  'Put Away',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
           actions: [
             IconButton(
                 onPressed: () {

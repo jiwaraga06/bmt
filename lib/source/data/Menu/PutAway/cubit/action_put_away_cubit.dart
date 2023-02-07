@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 part 'action_put_away_state.dart';
+
 class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
   final MyRepository? myRepository;
   ActionPutAwayCubit({required this.myRepository}) : super(ActionPutAwayInitial());
@@ -53,16 +54,17 @@ class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
                 child: pw.Column(children: [
               pw.Row(mainAxisAlignment: pw.MainAxisAlignment.spaceBetween, children: [
                 pw.Column(crossAxisAlignment: pw.CrossAxisAlignment.start, children: [
-                  pw.Text(json['entitas'], style: pw.TextStyle(fontSize: 12, fontWeight: pw.FontWeight.bold)),
-                  pw.Text('O.K. PART', style: pw.TextStyle(fontSize: 15, fontWeight: pw.FontWeight.bold)),
+                  pw.Text(json['entitas'], style: pw.TextStyle(fontSize: 17, fontWeight: pw.FontWeight.bold)),
+                  pw.SizedBox(height: 15),
+                  pw.Text('O.K. PART', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
                 ]),
                 pw.Container(
-                    height: 45,
-                    width: 80,
+                    height: 50,
+                    width: 90,
                     color: PdfColors.black,
                     // color: Color.fromARGB(0, 35, 35, 35),
                     alignment: pw.Alignment.center,
-                    child: pw.Text(json['model'], style: pw.TextStyle(fontSize: 18, color: PdfColors.white, fontWeight: pw.FontWeight.bold)))
+                    child: pw.Text(json['model'], style: pw.TextStyle(fontSize: 22, color: PdfColors.white, fontWeight: pw.FontWeight.bold)))
               ]),
               pw.SizedBox(height: 4),
               pw.Divider(thickness: 2, color: PdfColors.grey),
@@ -72,39 +74,60 @@ class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
                 1: pw.FixedColumnWidth(10),
               }, children: [
                 pw.TableRow(children: [
-                  pw.Text('Model', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['model'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Model', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['model'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('Nama Part', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['nama_part'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Nama Part', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['nama_part'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('Nomor Part', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['no_part'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Nomor Part', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['no_part'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('Customer', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['customer'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Customer', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['customer'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('No Lot', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['no_lot'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('No Lot', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['no_lot'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('Qty(Pcs)', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(json['qty'], style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Qty(Pcs)', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text(json['qty'], style: pw.TextStyle(fontSize: 17)),
                 ]),
                 pw.TableRow(children: [
-                  pw.Text('Tgl Kirim', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text(':', style: pw.TextStyle(fontSize: 15)),
-                  pw.Text('', style: pw.TextStyle(fontSize: 15)),
+                  pw.Padding(
+                    padding: const pw.EdgeInsets.only(bottom: 6),
+                    child: pw.Text('Tgl Kirim', style: pw.TextStyle(fontSize: 17)),
+                  ),
+                  pw.Text(':', style: pw.TextStyle(fontSize: 17)),
+                  pw.Text('', style: pw.TextStyle(fontSize: 17)),
                 ]),
               ]),
               pw.SizedBox(height: 20),
@@ -121,20 +144,20 @@ class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
                       pw.Padding(
                         padding: pw.EdgeInsets.all(8.0),
                         child: pw.Center(
-                          child: pw.Image(netImage, height: 50),
+                          child: pw.Image(netImage, height: 80),
                         ),
                       ),
                       pw.Column(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
                         pw.Padding(
                           padding: pw.EdgeInsets.only(bottom: -8),
-                          child: pw.Text('QC', textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text('QC', textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.Divider(thickness: 2, color: PdfColors.black),
                       ]),
                       pw.Column(mainAxisAlignment: pw.MainAxisAlignment.start, children: [
                         pw.Padding(
                           padding: pw.EdgeInsets.only(bottom: -8),
-                          child: pw.Text('PPIC', textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 14, fontWeight: pw.FontWeight.bold)),
+                          child: pw.Text('PPIC', textAlign: pw.TextAlign.center, style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
                         ),
                         pw.Divider(thickness: 2, color: PdfColors.black),
                       ]),
