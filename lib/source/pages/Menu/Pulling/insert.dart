@@ -29,7 +29,7 @@ class _InsertPullingState extends State<InsertPulling> {
   final formKey = GlobalKey<FormState>();
   String? wc_to_id, wc_from_id, last_wc, qty_real;
   save() {
-    // if (formKey.currentState!.validate()) {
+    if (formKey.currentState!.validate()) {
     BlocProvider.of<SavePullingCubit>(context).savePulling(
       controllerBoxNumber.text,
       controllerQtyOk.text,
@@ -40,7 +40,7 @@ class _InsertPullingState extends State<InsertPulling> {
       qty_real,
       last_wc,
     );
-    // }
+    }
   }
 
   @override
@@ -104,7 +104,7 @@ class _InsertPullingState extends State<InsertPulling> {
                           CustomFormFieldRead(
                             controller: controllerWO,
                             label: 'Work Order',
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerBoxNumber,
@@ -114,35 +114,35 @@ class _InsertPullingState extends State<InsertPulling> {
                           CustomFormFieldRead(
                             controller: controllerWorkCenterFrom,
                             label: 'Work Center From',
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerWorkCenterTo,
                             label: 'Work Center To',
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormFieldRead(
                             controller: controllerQtyAvailable,
                             label: 'Quantity Available',
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
                             controller: controllerQtyOk,
                             label: 'Quantity OK',
-                            msgError: 'Kolom harus di isi',
                             inputType: TextInputType.number,
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
                             controller: controllerQtyRepair,
                             label: 'Quantity Repair',
                             inputType: TextInputType.number,
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                           CustomFormField(
                             controller: controllerQtyNG,
                             label: 'Quantity NG',
                             inputType: TextInputType.number,
-                            msgError: 'Kolom harus di isi',
+                            // msgError: 'Kolom harus di isi',
                           ),
                         ],
                       ),

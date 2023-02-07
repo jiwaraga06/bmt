@@ -118,7 +118,7 @@ class _PutAwayState extends State<PutAway> {
                       children: [
                         SlidableAction(
                           onPressed: (context) {
-                            BlocProvider.of<ActionPutAwayCubit>(context).printPutaway(data['packld_oid']);
+                            BlocProvider.of<ActionPutAwayCubit>(context).printPutaway(data['packld_oid'], context);
                           },
                           backgroundColor: Color(0xFF0392CF),
                           foregroundColor: Colors.white,

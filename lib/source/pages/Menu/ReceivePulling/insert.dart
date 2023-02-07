@@ -126,13 +126,13 @@ class _InsertReceivePullingState extends State<InsertReceivePulling> {
                       CustomFormFieldRead(
                         controller: controllerWo,
                         label: 'Work Order',
-                        msgError: 'Kolom harus di isi',
+                        // msgError: 'Kolom harus di isi',
                       ),
                       const SizedBox(height: 8.0),
                       CustomFormFieldRead(
                         controller: controllerBoxNum,
                         label: 'Box Number',
-                        msgError: 'Kolom harus di isi',
+                        // msgError: 'Kolom harus di isi',
                       ),
                       const SizedBox(height: 8.0),
                       TextFormField(
@@ -233,14 +233,14 @@ class _InsertReceivePullingState extends State<InsertReceivePulling> {
                         inputType: TextInputType.number,
                         controller: controllerQtyRepair,
                         label: 'Qty Repair',
-                        msgError: 'Kolom harus di isi',
+                        // msgError: 'Kolom harus di isi',
                       ),
                       const SizedBox(height: 8.0),
                       CustomFormField(
                         inputType: TextInputType.number,
                         controller: controllerQtyReNG,
                         label: 'Qty NG',
-                        msgError: 'Kolom harus di isi',
+                        // msgError: 'Kolom harus di isi',
                       ),
                       const SizedBox(height: 8.0),
                     ],
