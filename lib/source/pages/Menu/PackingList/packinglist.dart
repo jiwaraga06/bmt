@@ -24,6 +24,7 @@ class _PacklingListState extends State<PacklingList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: isSearch
               ? TextFormField(
                   autofocus: true,
@@ -33,7 +34,10 @@ class _PacklingListState extends State<PacklingList> {
                     hintStyle: TextStyle(color: Colors.white),
                   ),
                 )
-              : Text('Packing List'),
+              : Text(
+                  'Packing List',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
           actions: [
             IconButton(
               onPressed: () {

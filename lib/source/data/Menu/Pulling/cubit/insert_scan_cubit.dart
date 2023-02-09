@@ -33,4 +33,17 @@ class InsertScanCubit extends Cubit<InsertScanState> {
       barcodeScanRes = 'Failed to get platform version.';
     }
   }
+
+  void insertManual(value) async {
+    emit(InsertScanLoading());
+    myRepository!.pullingScanInsert(value).then((value) {
+      var json = jsonDecode(value.body);
+      print('Insert Scan : $json');
+      if (json['status'] == 'success') {
+        emit(InsertScanLoaded(json: json, statusCode: 200));
+      } else {
+        emit(InsertScanLoaded(json: json, statusCode: 400));
+      }
+    });
+  }
 }

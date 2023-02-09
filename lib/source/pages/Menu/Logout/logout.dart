@@ -21,7 +21,8 @@ class _LogoutState extends State<Logout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Logout'),
+        centerTitle: true,
+        title: Text('Logout', style: TextStyle(fontWeight: FontWeight.w600),),
       ),
       body: BlocBuilder<AccountCubit, AccountState>(
         builder: (context, state) {

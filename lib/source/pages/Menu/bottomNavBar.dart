@@ -15,7 +15,13 @@ class CustomBottomNavbar extends StatefulWidget {
 
 class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   var _bottomNavIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[Pulling(), ReceivePulling(), PutAway(), PacklingList(), Logout()];
+  static const List<Widget> _widgetOptions = <Widget>[
+    Pulling(),
+    // ReceivePulling(),
+    PutAway(),
+    PacklingList(),
+    Logout(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,14 +46,14 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
               ),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.listCheck),
-              activeIcon: Icon(
-                FontAwesomeIcons.listCheck,
-                color: Color(0XFF27496D),
-              ),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(FontAwesomeIcons.listCheck),
+            //   activeIcon: Icon(
+            //     FontAwesomeIcons.listCheck,
+            //     color: Color(0XFF27496D),
+            //   ),
+            //   label: '',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.boxArchive),
               activeIcon: Icon(

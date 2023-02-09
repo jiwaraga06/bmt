@@ -24,6 +24,7 @@ class _ReceivePullingState extends State<ReceivePulling> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: isSearch
               ? TextFormField(
                   autofocus: true,
@@ -36,7 +37,7 @@ class _ReceivePullingState extends State<ReceivePulling> {
                     BlocProvider.of<ReceivePullingCubit>(context).searchData(value);
                   },
                 )
-              : Text('Receive Pulling'),
+              : Text('Receive Pulling', style: TextStyle(fontWeight: FontWeight.w600),),
           actions: [
             IconButton(
                 onPressed: () {

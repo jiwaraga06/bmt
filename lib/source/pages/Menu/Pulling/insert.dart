@@ -7,6 +7,7 @@ import 'package:bmt/source/widget/customBtnScanQr.dart';
 import 'package:bmt/source/widget/customLoading.dart';
 import 'package:bmt/source/widget/customTextField.dart';
 import 'package:bmt/source/widget/customTextFieldRead.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +19,8 @@ class InsertPulling extends StatefulWidget {
 }
 
 class _InsertPullingState extends State<InsertPulling> {
+  TextEditingController controllerManual = TextEditingController();
+  // INSERT MANUAL
   TextEditingController controllerWO = TextEditingController();
   TextEditingController controllerBoxNumber = TextEditingController();
   TextEditingController controllerWorkCenterFrom = TextEditingController();
@@ -28,18 +31,19 @@ class _InsertPullingState extends State<InsertPulling> {
   TextEditingController controllerQtyNG = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String? wc_to_id, wc_from_id, last_wc, qty_real;
+  bool isManual = false;
   save() {
     if (formKey.currentState!.validate()) {
-    BlocProvider.of<SavePullingCubit>(context).savePulling(
-      controllerBoxNumber.text,
-      controllerQtyOk.text,
-      controllerQtyRepair.text,
-      controllerQtyNG.text,
-      wc_to_id,
-      wc_from_id,
-      qty_real,
-      last_wc,
-    );
+      BlocProvider.of<SavePullingCubit>(context).savePulling(
+        controllerBoxNumber.text,
+        controllerQtyOk.text,
+        controllerQtyRepair.text,
+        controllerQtyNG.text,
+        wc_to_id,
+        wc_from_id,
+        qty_real,
+        last_wc,
+      );
     }
   }
 
@@ -48,21 +52,58 @@ class _InsertPullingState extends State<InsertPulling> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Insert Pulling'),
+        actions: [
+          CupertinoSwitch(
+              value: isManual,
+              onChanged: (value) {
+                setState(() {
+                  isManual = value;
+                });
+              }),
+        ],
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomButtonScanQR(
-                    onTap: () {
-                      BlocProvider.of<InsertScanCubit>(context).scanInsert();
-                    },
-                    text: 'Scan QR Code',
-                  ),
-                ),
+                isManual == true
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: controllerManual,
+                              // onEditingComplete: () {
+                              //   if (controllerManual.text != '') {
+                              //     BlocProvider.of<InsertScanCubit>(context).insertManual(controllerManual.text);
+                              //   }
+                              // },
+                              decoration: InputDecoration(
+                                hintText: 'Masukan Kode',
+                                suffixIcon: InkWell(
+                                    onTap: () {
+                                      if (controllerManual.text != '') {
+                                        BlocProvider.of<InsertScanCubit>(context).insertManual(controllerManual.text);
+                                      }
+                                    },
+                                    child: Icon(Icons.search)),
+                              ),
+                            ),
+                            const SizedBox(height: 15.0),
+                            Divider(thickness: 2)
+                          ],
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CustomButtonScanQR(
+                          onTap: () {
+                            BlocProvider.of<InsertScanCubit>(context).scanInsert();
+                          },
+                          text: 'Scan QR Code',
+                        ),
+                      ),
                 BlocListener<InsertScanCubit, InsertScanState>(
                   listener: (context, state) {
                     if (state is InsertScanLoading) {

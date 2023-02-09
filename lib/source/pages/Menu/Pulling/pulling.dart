@@ -31,6 +31,7 @@ class _PullingState extends State<Pulling> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: isSearch
             ? TextFormField(
               autofocus: true,
@@ -43,7 +44,7 @@ class _PullingState extends State<Pulling> {
                   BlocProvider.of<PullingCubit>(context).searchData(value);
                 },
               )
-            : Text('Pulling'),
+            : Text('Pulling', style: TextStyle(fontWeight: FontWeight.w600),),
         actions: [
           IconButton(
               onPressed: () {
