@@ -46,10 +46,14 @@ dependencies:
   awesome_snackbar_content: ^0.1.0
   persistent_bottom_nav_bar: ^5.0.2
   flutter_speed_dial: ^6.2.0
-  modal_bottom_sheet: ^2.1.2
+  modal_bottom_sheet:
+    git:
+      url: https://github.com/danReynolds/modal_bottom_sheet.git
+      path: modal_bottom_sheet
   printing: ^5.9.3
   flutter_slidable: ^2.0.0
   pdf: ^3.8.4
+  flutter_bluetooth_printer: ^2.7.1
 
 dev_dependencies:
   flutter_test:

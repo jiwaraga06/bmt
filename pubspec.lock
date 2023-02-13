@@ -41,14 +41,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
-  bidi:
-    dependency: transitive
-    description:
-      name: bidi
-      sha256: dc00274c7edabae2ab30c676e736ea1eb0b1b7a1b436cb5fe372e431ccb39ab0
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.6"
   bloc:
     dependency: transitive
     description:
@@ -105,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  csslib:
+    dependency: transitive
+    description:
+      name: csslib
+      sha256: b36c7f7e24c0bdf1bf9a3da461c837d1de64b9f8beb190c9011d8c72a3dfd745
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.17.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -113,6 +113,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  esc_pos_utils_plus:
+    dependency: transitive
+    description:
+      name: esc_pos_utils_plus
+      sha256: "397c8c6eda37e3ee50aa22a591fe87c5ca8e0fa50ea0f092fcd42dbdfa8c2863"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1+6"
   fake_async:
     dependency: transitive
     description:
@@ -158,6 +166,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.1.2"
+  flutter_bluetooth_printer:
+    dependency: "direct main"
+    description:
+      name: flutter_bluetooth_printer
+      sha256: ec1131aff0e74fe93089e053add1c4c880d696563bd9b7fa502defa8bd36dde6
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.1"
+  flutter_bluetooth_printer_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_bluetooth_printer_platform_interface
+      sha256: fb61723299979245bf34528dbe2a970707b93f9a3f479d65b2ad3df0cbbd3b96
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -224,6 +248,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  hex:
+    dependency: transitive
+    description:
+      name: hex
+      sha256: "4e7cd54e4b59ba026432a6be2dd9d96e4c5205725194997193bf871703b82c4a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  html:
+    dependency: transitive
+    description:
+      name: html
+      sha256: d9793e10dbe0e6c364f4c59bf3e01fb33a9b2a674bc7a1081693dba0614b6269
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.1"
   http:
     dependency: "direct main"
     description:
@@ -244,10 +284,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "3686865febd85c57a632d87a0fb1f0a8a9ef602fdb68d909c3e9aa29ec70fd24"
+      sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.13"
+    version: "3.3.0"
   intl:
     dependency: "direct main"
     description:
@@ -299,10 +339,11 @@ packages:
   modal_bottom_sheet:
     dependency: "direct main"
     description:
-      name: modal_bottom_sheet
-      sha256: ef533916a2c3089571c32bd34e410faca77a6849a3f28f748e0794525c5658a0
-      url: "https://pub.dev"
-    source: hosted
+      path: modal_bottom_sheet
+      ref: HEAD
+      resolved-ref: d79185a564c6d1b1535568ea7dfef060e20a049d
+      url: "https://github.com/danReynolds/modal_bottom_sheet.git"
+    source: git
     version: "2.1.2"
   nested:
     dependency: transitive
@@ -364,10 +405,10 @@ packages:
     dependency: "direct main"
     description:
       name: pdf
-      sha256: "6cd57e8e6d052bd1078f18e0dc7cd6701fad6288231c1ce99d66ef5034d14e61"
+      sha256: "10659b915e65832b106f6d1d213e09b789cc1f24bf282ee911e49db35b96be4d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.9.0"
+    version: "3.8.4"
   persistent_bottom_nav_bar:
     dependency: "direct main"
     description:
@@ -412,10 +453,10 @@ packages:
     dependency: "direct main"
     description:
       name: printing
-      sha256: fe654363cd0114b50a0815b24e96957c7e9a60eb4e3b7ccfe71cf3f2b7114cb2
+      sha256: "4df9e22bd4cb2ecea67183e5b328711b10276127b8878d9d5cb60ccd4c24a77c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.10.1"
+    version: "5.9.3"
   process:
     dependency: transitive
     description:
@@ -599,4 +640,4 @@ packages:
     version: "6.2.2"
 sdks:
   dart: ">=2.18.6 <3.0.0"
-  flutter: ">=3.7.0"
+  flutter: ">=3.0.0"
