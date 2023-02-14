@@ -32,12 +32,16 @@ class SavePutAwayCubit extends Cubit<SavePutAwayState> {
     print(body);
     emit(SavePutAwayLoading());
     myRepository!.saveputaway(body).then((value) {
-      var json = jsonDecode(value.body);
-      print('SAVE PUT AWAY: $json');
-      if (json['status'] != 'error') {
-        emit(SavePutAwayLoaded(json: json, statusCode: 200));
+      if (value.statusCode == 200) {
+        var json = jsonDecode(value.body);
+        print('SAVE PUT AWAY: $json');
+        if (json['status'] != 'error') {
+          emit(SavePutAwayLoaded(json: json, statusCode: 200));
+        } else {
+          emit(SavePutAwayLoaded(json: json, statusCode: 400));
+        }
       } else {
-        emit(SavePutAwayLoaded(json: json, statusCode: 400));
+        emit(SavePutAwayLoaded(json: {'msg': 'Error: ${value.statusCode}'}, statusCode: value.statusCode));
       }
     });
   }

@@ -262,6 +262,7 @@ class _PutAwayState extends State<PutAway> {
                   }
                   return Container(
                       child: ListView.builder(
+                        shrinkWrap: true,
                     itemCount: json.length,
                     itemBuilder: (context, index) {
                       var data = json[index];
