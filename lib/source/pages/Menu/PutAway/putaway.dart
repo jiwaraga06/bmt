@@ -1,11 +1,13 @@
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/action_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
+import 'package:bmt/source/pages/Menu/PutAway/tesprint.dart';
 import 'package:bmt/source/router/string.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:bmt/source/widget/customLoading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_bluetooth_printer/flutter_bluetooth_printer.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,33 +21,25 @@ class PutAway extends StatefulWidget {
 
 class _PutAwayState extends State<PutAway> {
   bool isSearch = false;
-  ReceiptController? controller;
-  String? address;
+  TestPrint testPrint = TestPrint();
+  List<BluetoothDevice> devices = [];
+  BluetoothDevice? selectedDevice;
+  BlueThermalPrinter printer = BlueThermalPrinter.instance;
 
-  Widget buildPrint(BuildContext context) {
-    return Receipt(
-      /// You can build your receipt widget that will be printed to the device
-      /// Note that, this feature is in experimental, you should make sure your widgets will be fit on every device.
-      builder: (context) => Column(children: [
-        Text('Hello World'),
-      ]),
-      onInitialized: (controller) {
-        this.controller = controller;
-      },
-    );
-  }
-
-  Future<void> print() async {
-    final device = await FlutterBluetoothPrinter.selectDevice(context);
-    if (device != null) {
-      controller?.print(address: device.address);
+  void getDivice() async {
+    try {
+      devices = await printer.getBondedDevices();
+    } catch (e) {
+      print('Error get divice: $e');
     }
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     BlocProvider.of<PutawayCubit>(context).currentPutaway();
+    getDivice();
   }
 
   @override
@@ -117,129 +111,51 @@ class _PutAwayState extends State<PutAway> {
           },
           child: Column(
             children: [
+              ElevatedButton(
+                onPressed: () {
+                  // printer.isConnected.then((value) {
+                  //   print('Is KONEK: $value');
+                  // });
+                  printer.isOn.then((value) {
+                    print('Is ON: $value');
+                  });
+                  printer.isConnected.then((isConnected) {
+                    print('isConnected: $isConnected');
+                    if (!isConnected!) {
+                      printer.connect(selectedDevice!).catchError((error) {
+                        print('Error: $error');
+                      });
+                    }
+                  });
+                  // printer.disconnect();
+                },
+                child: const Text(
+                  'Connect',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
               const SizedBox(height: 10),
-              IconButton(
-                onPressed: () async {
-                  final selected = await FlutterBluetoothPrinter.selectDevice(context);
-                  if (selected != null) {
-                    setState(() {
-                      address = selected.address;
-                    });
-                  }
-                },
-                icon: const Icon(Icons.settings),
-              ),
-              IconButton(
-                onPressed: () async {
-                  final selectedAddress = address ?? (await FlutterBluetoothPrinter.selectDevice(context))?.address;
-
-                  if (selectedAddress != null) {
-                    PrintingProgressDialog.print(
-                      context,
-                      device: selectedAddress,
-                      controller: controller!,
-                    );
-                  }
-                },
-                icon: const Icon(Icons.print),
-              ),
-              Receipt(
-                backgroundColor: Colors.grey.shade200,
-                builder: (context) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxHeight: 36,
-                        ),
-                        child: const FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'PURCHASE RECEIPT',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Divider(thickness: 2),
-                      Table(
-                        columnWidths: const {
-                          1: IntrinsicColumnWidth(),
-                        },
-                        children: const [
-                          TableRow(
-                            children: [
-                              Text('ORANGE JUICE'),
-                              Text(r'$2'),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Text('CAPPUCINO MEDIUM SIZE'),
-                              Text(r'$2.9'),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Text('BEEF PIZZA'),
-                              Text(r'$15.9'),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Text('ORANGE JUICE'),
-                              Text(r'$2'),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Text('CAPPUCINO MEDIUM SIZE'),
-                              Text(r'$2.9'),
-                            ],
-                          ),
-                          TableRow(
-                            children: [
-                              Text('BEEF PIZZA'),
-                              Text(r'$15.9'),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const Divider(thickness: 2),
-                      FittedBox(
-                        fit: BoxFit.cover,
-                        child: Row(
-                          children: const [
-                            Text(
-                              'TOTAL',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Text(
-                              r'$200',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(thickness: 2),
-                      const Text('Thank you for your purchase!'),
-                      const SizedBox(height: 24),
-                    ],
-                  );
-                },
-                onInitialized: (controller) {
+              DropdownButton<BluetoothDevice>(
+                hint: Text('Printer'),
+                value: selectedDevice,
+                items: devices
+                    .map((e) => DropdownMenuItem<BluetoothDevice>(
+                          child: Text(e.name!),
+                          value: e,
+                        ))
+                    .toList(),
+                onChanged: (BluetoothDevice? value) {
                   setState(() {
-                    this.controller = controller;
+                    selectedDevice = value;
+                    print(selectedDevice!.name);
                   });
                 },
+              ),
+              IconButton(
+                onPressed: () async {
+                  testPrint.sample();
+                },
+                icon: const Icon(Icons.print),
               ),
               const SizedBox(height: 10),
               BlocBuilder<PutawayCubit, PutawayState>(
@@ -260,102 +176,104 @@ class _PutAwayState extends State<PutAway> {
                       child: Text('Data Kosong'),
                     );
                   }
-                  return Container(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                    itemCount: json.length,
-                    itemBuilder: (context, index) {
-                      var data = json[index];
-                      return Slidable(
-                        key: ValueKey(index),
-                        endActionPane: ActionPane(
-                          motion: StretchMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                BlocProvider.of<ActionPutAwayCubit>(context).printPutaway(data['packld_oid'], context);
-                              },
-                              backgroundColor: Color(0xFF0392CF),
-                              foregroundColor: Colors.white,
-                              icon: Icons.print,
-                              label: 'PRINT',
-                            ),
-                            SlidableAction(
-                              onPressed: (context) {
-                                BlocProvider.of<ActionPutAwayCubit>(context).deletePutAway(data['packld_oid']);
-                              },
-                              backgroundColor: Colors.red.shade700,
-                              foregroundColor: Colors.white,
-                              icon: Icons.delete_outline,
-                              label: 'DELETE',
-                            ),
-                          ],
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.all(8.0),
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8.0), boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.3),
-                              spreadRadius: 1.2,
-                              blurRadius: 1.2,
-                              offset: Offset(1, 2),
-                            )
-                          ]),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                  return Expanded(
+                    child: Container(
+                        child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: json.length,
+                      itemBuilder: (context, index) {
+                        var data = json[index];
+                        return Slidable(
+                          key: ValueKey(index),
+                          endActionPane: ActionPane(
+                            motion: StretchMotion(),
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 3,
-                                    child: Row(
-                                      children: [
-                                        Text(data['packld_code'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-                                      ],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Row(
-                                      children: [
-                                        Text(data['packl_date'], style: TextStyle(fontSize: 15)),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 8.0),
-                              Text('${data['ptnr_name']}', style: TextStyle(fontSize: 15)),
-                              const SizedBox(height: 8.0),
-                              // Image.network('http://182.253.45.29:88/api-dev04/assets/images/TDI001-230127-1-003.jpg'),
-                              Table(
-                                columnWidths: const {
-                                  0: FixedColumnWidth(90),
-                                  1: FixedColumnWidth(10),
+                              SlidableAction(
+                                onPressed: (context) {
+                                  BlocProvider.of<ActionPutAwayCubit>(context).printPutaway(data['packld_oid'], context);
                                 },
-                                children: [
-                                  TableRow(children: [
-                                    Text('Lot Number'),
-                                    Text(':'),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 2.0),
-                                      child: Text(data['packld_lot_no']),
-                                    ),
-                                  ]),
-                                  TableRow(children: [
-                                    Text('Qty'),
-                                    Text(':'),
-                                    Text(data['packld_qty_pack']),
-                                  ]),
-                                ],
-                              )
+                                backgroundColor: Color(0xFF0392CF),
+                                foregroundColor: Colors.white,
+                                icon: Icons.print,
+                                label: 'PRINT',
+                              ),
+                              SlidableAction(
+                                onPressed: (context) {
+                                  BlocProvider.of<ActionPutAwayCubit>(context).deletePutAway(data['packld_oid']);
+                                },
+                                backgroundColor: Colors.red.shade700,
+                                foregroundColor: Colors.white,
+                                icon: Icons.delete_outline,
+                                label: 'DELETE',
+                              ),
                             ],
                           ),
-                        ),
-                      );
-                    },
-                  ));
+                          child: Container(
+                            margin: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8.0), boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 1.2,
+                                blurRadius: 1.2,
+                                offset: Offset(1, 2),
+                              )
+                            ]),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 3,
+                                      child: Row(
+                                        children: [
+                                          Text(data['packld_code'], style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: Row(
+                                        children: [
+                                          Text(data['packl_date'], style: TextStyle(fontSize: 15)),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8.0),
+                                Text('${data['ptnr_name']}', style: TextStyle(fontSize: 15)),
+                                const SizedBox(height: 8.0),
+                                // Image.network('http://182.253.45.29:88/api-dev04/assets/images/TDI001-230127-1-003.jpg'),
+                                Table(
+                                  columnWidths: const {
+                                    0: FixedColumnWidth(90),
+                                    1: FixedColumnWidth(10),
+                                  },
+                                  children: [
+                                    TableRow(children: [
+                                      Text('Lot Number'),
+                                      Text(':'),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 2.0),
+                                        child: Text(data['packld_lot_no']),
+                                      ),
+                                    ]),
+                                    TableRow(children: [
+                                      Text('Qty'),
+                                      Text(':'),
+                                      Text(data['packld_qty_pack']),
+                                    ]),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    )),
+                  );
                 },
               ),
             ],
@@ -396,91 +314,5 @@ class _PutAwayState extends State<PutAway> {
             ),
           ],
         ));
-  }
-}
-
-class PrintingProgressDialog extends StatefulWidget {
-  final String device;
-  final ReceiptController controller;
-  const PrintingProgressDialog({
-    Key? key,
-    required this.device,
-    required this.controller,
-  }) : super(key: key);
-
-  @override
-  State<PrintingProgressDialog> createState() => _PrintingProgressDialogState();
-  static void print(
-    BuildContext context, {
-    required String device,
-    required ReceiptController controller,
-  }) async {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => PrintingProgressDialog(
-        controller: controller,
-        device: device,
-      ),
-    );
-  }
-}
-
-class _PrintingProgressDialogState extends State<PrintingProgressDialog> {
-  double? progress;
-  @override
-  void initState() {
-    super.initState();
-    widget.controller.print(
-      address: widget.device,
-      linesAfter: 2,
-      useImageRaster: true,
-      keepConnected: true,
-      onProgress: (total, sent) {
-        if (mounted) {
-          setState(() {
-            progress = sent / total;
-          });
-        }
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Printing Receipt',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: progress,
-              backgroundColor: Colors.grey.shade200,
-            ),
-            const SizedBox(height: 4),
-            Text('Processing: ${((progress ?? 0) * 100).round()}%'),
-            if (((progress ?? 0) * 100).round() == 100) ...[
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  await FlutterBluetoothPrinter.disconnect(widget.device);
-                  Navigator.pop(context);
-                },
-                child: const Text('Disconnect'),
-              )
-            ]
-          ],
-        ),
-      ),
-    );
   }
 }

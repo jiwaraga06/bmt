@@ -172,6 +172,7 @@ class ActionPutAwayCubit extends Cubit<ActionPutAwayState> {
           },
         ));
         await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => doc.save());
+        // await Printing.directPrintPdf(printer: Printer(url: url), onLayout: (PdfPageFormat format) async => doc.save());
       } else {
         emit(ActionPrintPutAwayLoaded(json: json, statusCode: value.statusCode));
       }

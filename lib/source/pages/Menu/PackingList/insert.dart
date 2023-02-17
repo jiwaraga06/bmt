@@ -1,6 +1,5 @@
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/detail_packing_save_cubit.dart';
-import 'package:bmt/source/data/Menu/PackingList/cubit/header_packing_list_cubit.dart';
 import 'package:bmt/source/data/Menu/PackingList/cubit/packing_list_cubit.dart';
 import 'package:bmt/source/pages/Menu/PackingList/detail.dart';
 import 'package:bmt/source/pages/Menu/PackingList/header.dart';
