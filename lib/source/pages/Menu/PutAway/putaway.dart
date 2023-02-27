@@ -1,3 +1,4 @@
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/action_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
 import 'package:bmt/source/router/string.dart';
@@ -100,6 +101,7 @@ class _PutAwayState extends State<PutAway> {
                 );
               }
               if (state is PutawayLoaded == false) {
+                
                 return Center(
                   child: Text('No Data'),
                 );
