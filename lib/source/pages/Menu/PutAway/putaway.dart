@@ -1,10 +1,13 @@
 import 'package:blue_thermal_printer/blue_thermal_printer.dart';
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/action_put_away_cubit.dart';
 import 'package:bmt/source/data/Menu/PutAway/cubit/putaway_cubit.dart';
+import 'package:bmt/source/pages/Menu/PutAway/tesprint.dart';
 import 'package:bmt/source/router/string.dart';
 import 'package:bmt/source/widget/customAlertDialog.dart';
 import 'package:bmt/source/widget/customLoading.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -19,11 +22,25 @@ class PutAway extends StatefulWidget {
 
 class _PutAwayState extends State<PutAway> {
   bool isSearch = false;
+  TestPrint testPrint = TestPrint();
+  List<BluetoothDevice> devices = [];
+  BluetoothDevice? selectedDevice;
+  BlueThermalPrinter printer = BlueThermalPrinter.instance;
+
+  void getDivice() async {
+    try {
+      devices = await printer.getBondedDevices();
+    } catch (e) {
+      print('Error get divice: $e');
+    }
+    setState(() {});
+  }
 
   @override
   void initState() {
     super.initState();
     BlocProvider.of<PutawayCubit>(context).currentPutaway();
+    getDivice();
   }
 
   @override
@@ -101,7 +118,6 @@ class _PutAwayState extends State<PutAway> {
                 );
               }
               if (state is PutawayLoaded == false) {
-                
                 return Center(
                   child: Text('No Data'),
                 );

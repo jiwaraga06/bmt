@@ -31,13 +31,17 @@ class SavePullingCubit extends Cubit<SavePullingState> {
     print(jsonEncode(body));
     emit(SavePullingLoading());
     myRepository!.pullingSave(body).then((value) {
-      var json = jsonDecode(value.body);
-      print('Save Pulling:  $json');
-      if (json['status'] == 'error') {
-        emit(SavePullingLoaded(json: json['msg'], statusCode: 400));
+        print(value.statusCode);
+      if (value.statusCode == 200) {
+        var json = jsonDecode(value.body);
+        print('Save Pulling:  $json');
+        if (json['status'] == 'error') {
+          emit(SavePullingLoaded(json: json['msg'], statusCode: 400));
+        } else {
+          emit(SavePullingLoaded(json: json['msg'], statusCode: 200));
+        }
       } else {
-        emit(SavePullingLoaded(json: json['msg'], statusCode: 200));
-
+        emit(SavePullingLoaded(json: 'Error: ${value.statusCode}', statusCode: value.statusCode));
       }
     });
   }

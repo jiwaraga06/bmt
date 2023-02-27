@@ -1,7 +1,19 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class MyAlertDialog {
+  static mySnackbar(context, message) {
+    return SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.blue,
+      elevation: 10,
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.all(5),
+      duration: Duration(seconds: 2),
+    );
+  }
+
   static warningDialog(context, message) {
     return AwesomeDialog(
       context: context,
@@ -14,7 +26,7 @@ class MyAlertDialog {
     )..show();
   }
 
-  static successDialog(context, message,VoidCallback? btnOkPressed) {
+  static successDialog(context, message, VoidCallback? btnOkPressed) {
     return AwesomeDialog(
       context: context,
       dialogType: DialogType.success,
@@ -25,6 +37,7 @@ class MyAlertDialog {
       btnOkOnPress: btnOkPressed,
     )..show();
   }
+
   static infoDialog(context, message) {
     return AwesomeDialog(
       context: context,

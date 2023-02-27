@@ -29,12 +29,16 @@ class ReceivePullingInsertCubit extends Cubit<ReceivePullingInsertState> {
     print(body);
     emit(ReceivePullingInsertLoading());
     myRepository!.receiveSave(body).then((value) {
-      var json = jsonDecode(value.body);
-      print('RECEIVE SAVE: $json');
-      if (json['staus'] == 'error') {
-        emit(ReceivePullingInsertLoaded(json: json, statusCode: 400));
+      if (value.stausCode == 200) {
+        var json = jsonDecode(value.body);
+        print('RECEIVE SAVE: $json');
+        if (json['staus'] == 'error') {
+          emit(ReceivePullingInsertLoaded(json: json, statusCode: 400));
+        } else {
+          emit(ReceivePullingInsertLoaded(json: json, statusCode: 200));
+        }
       } else {
-        emit(ReceivePullingInsertLoaded(json: json, statusCode: 200));
+        emit(ReceivePullingInsertLoaded(json: {'msg': 'Error: ${value.statusCode}'}, statusCode: value.statusCode));
       }
     });
   }
